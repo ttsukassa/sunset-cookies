@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunset Cookies — Simple Ingredients, Sweet Moments</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ──────────────────────────────────────────── */
+:root {
+  --bg:    #FAF0CC;
+  --bg2:   #EED88A;
+  --bg3:   #F5E3A4;
+  --card:  #FFFCF0;
+  --card2: #FEF6DC;
+
+  --br:    #1E0900;
+  --brm:   #7A3810;
+  --brl:   #A86030;
+
+  --am:    #C24E08;
+  --amw:   #E88C28;
+  --amp:   #F5C860;
+  --ams:   #FDE8A8;
+
+  --t1:    #1C0800;
+  --t2:    #784020;
+  --t3:    #A87040;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── KEYFRAMES ──────────────────────────────────────── */
+@keyframes hUp     {from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes floatBig{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes floatSm {0%,100%{transform:translateY(0) rotate(8deg)}50%{transform:translateY(-9px) rotate(-6deg)}}
+@keyframes glow1   {0%,100%{opacity:.65;transform:translate(-50%,-50%) scale(1)}50%{opacity:.9;transform:translate(-50%,-50%) scale(1.14)}}
+@keyframes glow2   {0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(1)}50%{opacity:.5;transform:translate(-50%,-50%) scale(1.09)}}
+@keyframes popIn   {0%{transform:scale(0)}80%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes slideIn {from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+@keyframes waRing  {0%{transform:scale(1);opacity:.55}100%{transform:scale(1.75);opacity:0}}
+
+/* ── SCROLL REVEAL ──────────────────────────────────── */
+.rv  {opacity:0;transform:translateY(30px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:none}
+.rv1 {transition-delay:.08s}
+.rv2 {transition-delay:.18s}
+.rv3 {transition-delay:.28s}
+
+/* ── NAV ────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,240,204,.88);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(194,150,60,.22);
+  padding:12px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nl{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:500;color:var(--br);letter-spacing:.03em;line-height:1}
+.nl small{display:block;font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--t3);font-weight:400;margin-top:3px}
+.nwa{
+  background:#25D366;color:#fff;border:none;
+  padding:10px 16px;border-radius:100px;
+  font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;display:flex;align-items:center;gap:6px;text-decoration:none;
+  box-shadow:0 2px 10px rgba(37,211,102,.3);
+}
+.nwa:active{opacity:.85}
+
+/* ── HERO ───────────────────────────────────────────── */
+.hero{
+  position:relative;min-height:96vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 24px 100px;text-align:center;overflow:hidden;
+
+  /* Layered sunset glow — the signature element */
+  background:
+    radial-gradient(ellipse 130% 65% at 50% 108%, rgba(194,78,8,.22) 0%, transparent 52%),
+    radial-gradient(ellipse 90% 70% at 18% 65%, rgba(232,140,40,.16) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 55% at 82% 28%, rgba(222,130,24,.13) 0%, transparent 48%),
+    radial-gradient(ellipse 55% 40% at 50% 48%, rgba(245,195,90,.14) 0%, transparent 60%),
+    #FAF0CC;
+}
+
+/* Glow orbs */
+.hg2{
+  position:absolute;width:750px;height:750px;border-radius:50%;
+  background:radial-gradient(circle,rgba(194,78,8,.07) 0%,rgba(240,175,55,.05) 40%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;animation:glow2 8s ease-in-out infinite;
+}
+.hg1{
+  position:absolute;width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,rgba(228,125,18,.16) 0%,rgba(245,192,80,.08) 45%,transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;animation:glow1 5s ease-in-out infinite;
+}
+
+/* Scattered crumbs */
+.crumb{position:absolute;pointer-events:none;opacity:.32;animation:floatSm 6s ease-in-out infinite}
+.cr1{top:16%;left:7%;font-size:24px;animation-delay:.4s;transform:rotate(-22deg)}
+.cr2{top:22%;right:9%;font-size:17px;animation-delay:1.3s}
+.cr3{bottom:24%;left:11%;font-size:20px;animation-delay:2.1s;transform:rotate(18deg)}
+.cr4{bottom:28%;right:7%;font-size:23px;animation-delay:.9s;transform:rotate(-12deg)}
+.cr5{top:55%;left:4%;font-size:14px;animation-delay:1.8s}
+
+.hcookie{font-size:88px;display:block;margin-bottom:24px;animation:hUp .5s ease both .05s,floatBig 5s ease-in-out 1.5s infinite}
+.heye{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--am);font-weight:500;margin-bottom:22px;animation:hUp .6s ease both .2s}
+.hh1{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(54px,14vw,82px);font-weight:500;line-height:1.01;
+  color:var(--br);margin-bottom:18px;animation:hUp .7s ease both .35s;
+  letter-spacing:-.025em;
+}
+.hh1 em{font-style:italic;color:var(--amw);font-weight:400}
+.hsub{font-size:15px;color:var(--t2);font-weight:300;letter-spacing:.03em;margin-bottom:46px;animation:hUp .6s ease both .5s;line-height:1.75}
+.hcta{
+  background:var(--br);color:var(--bg);
+  border:none;padding:17px 46px;border-radius:100px;
+  font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;text-decoration:none;display:inline-block;
+  animation:hUp .6s ease both .65s;
+  box-shadow:0 6px 26px rgba(30,9,0,.32),0 2px 8px rgba(194,78,8,.22);
+  letter-spacing:.03em;
+}
+.hcta:active{opacity:.85;transform:scale(.97)}
+.hscroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:20px;color:var(--t3);animation:hUp .6s ease both .88s}
+
+/* ── DIVIDER ────────────────────────────────────────── */
+.divider{display:flex;align-items:center;gap:10px;padding:0 24px;margin:0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(194,130,40,.3),transparent)}
+.divider span{font-size:15px;opacity:.4}
+
+/* ── SECTION BASICS ─────────────────────────────────── */
+.sec{padding:60px 20px}
+.seye{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--am);font-weight:500;margin-bottom:10px}
+.sh{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:500;color:var(--br);margin-bottom:8px;line-height:1.15;letter-spacing:-.015em}
+.ssub{font-size:14px;color:var(--t2);font-weight:300;margin-bottom:34px;line-height:1.85}
+
+/* ── PRODUCT CARDS ──────────────────────────────────── */
+.grid{display:flex;flex-direction:column;gap:14px}
+
+.pc{
+  background:var(--card);
+  border-radius:22px;padding:24px 22px;
+  border:1px solid rgba(194,150,60,.28);
+  position:relative;overflow:hidden;
+  box-shadow:0 2px 16px rgba(30,9,0,.07),0 1px 5px rgba(194,110,20,.08);
+  transition:transform .24s ease,box-shadow .24s ease;
+}
+/* Warm top edge shimmer */
+.pc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--amp) 40%,var(--amw) 60%,transparent);
+  opacity:.55;
+}
+.pc:active,.pc:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 32px rgba(30,9,0,.13),0 3px 12px rgba(194,100,14,.16);
+}
+.pc:nth-child(1){animation:hUp .55s ease both .05s}
+.pc:nth-child(2){animation:hUp .55s ease both .15s}
+.pc:nth-child(3){animation:hUp .55s ease both .25s}
+
+.pbadge{
+  position:absolute;top:14px;right:14px;
+  background:var(--amp);color:var(--brm);
+  font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+}
+.pemoji{font-size:54px;margin-bottom:14px;display:block;transition:transform .26s}
+.pc:active .pemoji,.pc:hover .pemoji{transform:rotate(9deg) scale(1.1)}
+.pname{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:500;color:var(--br);margin-bottom:7px;letter-spacing:-.01em}
+.pdesc{font-size:13px;color:var(--t2);line-height:1.85;margin-bottom:22px;font-weight:300}
+.bd{
+  width:100%;background:var(--br);color:var(--bg);
+  border:none;padding:15px;border-radius:12px;
+  font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:opacity .12s,transform .12s;letter-spacing:.02em;
+}
+.bd:active{opacity:.8;transform:scale(.97)}
+.bo{
+  width:100%;background:transparent;color:var(--br);
+  border:1.5px solid rgba(30,9,0,.3);
+  padding:14px;border-radius:12px;
+  font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:opacity .12s,transform .12s,background .15s;
+}
+.bo:active{opacity:.75;transform:scale(.97)}
+
+/* ── COMING SOON CARDS ──────────────────────────────── */
+.csw{position:relative}
+.csc{
+  background:var(--card);border-radius:22px;padding:24px 22px;
+  border:1px solid rgba(194,150,60,.28);
+  filter:blur(5px);pointer-events:none;user-select:none;opacity:.5;
+}
+.csl{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:var(--br);color:var(--bg);
+  padding:10px 26px;border-radius:100px;
+  font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  white-space:nowrap;z-index:2;
+  box-shadow:0 4px 16px rgba(30,9,0,.32);
+}
+.cstease{
+  text-align:center;margin-top:10px;
+  font-size:12px;color:var(--t3);font-weight:300;letter-spacing:.04em;font-style:italic;
+}
+.cstease a{color:var(--am);text-decoration:none}
+
+/* ── CUSTOMIZER ─────────────────────────────────────── */
+.ol{font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{
+  padding:10px 16px;border-radius:100px;
+  border:1.5px solid rgba(194,150,60,.42);
+  background:var(--bg);font-size:13px;font-family:'DM Sans',sans-serif;
+  color:var(--brm);cursor:pointer;
+  transition:background .12s,border-color .12s,color .12s,transform .1s;
+  -webkit-tap-highlight-color:transparent;user-select:none;
+}
+.chip:active{transform:scale(.88)}
+.chip.sel{background:var(--br);border-color:var(--br);color:var(--bg)}
+
+/* ── HOW IT WORKS ───────────────────────────────────── */
+.hiw{
+  background:linear-gradient(155deg,var(--bg2) 0%,var(--ams) 55%,var(--bg3) 100%);
+  border-radius:26px;margin:0 12px;padding:44px 22px;
+  box-shadow:inset 0 0 0 1px rgba(194,150,55,.3),
+             0 4px 22px rgba(194,120,20,.1);
+  position:relative;overflow:hidden;
+}
+.hiw::after{
+  content:'';position:absolute;top:-70px;right:-70px;
+  width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(228,140,20,.2) 0%,transparent 70%);
+  pointer-events:none;
+}
+.steps{display:flex;flex-direction:column;gap:26px;margin-top:26px}
+.step{display:flex;gap:18px;align-items:flex-start}
+.stepn{
+  width:42px;height:42px;min-width:42px;border-radius:50%;
+  background:var(--card);
+  font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 12px rgba(30,9,0,.1),0 1px 5px rgba(194,100,10,.12);
+}
+.stept h4{font-family:'Cormorant Garamond',Georgia,serif;font-size:19px;font-weight:500;color:var(--br);margin-bottom:4px;letter-spacing:-.01em}
+.stept p{font-size:13px;color:var(--t2);font-weight:300;line-height:1.72}
+
+/* ── ORDER SECTION ──────────────────────────────────── */
+.ordsec{
+  background:var(--card);border-radius:28px 28px 0 0;
+  margin-top:52px;padding:38px 20px 80px;
+  border-top:1px solid rgba(194,150,60,.25);
+  box-shadow:0 -6px 28px rgba(30,9,0,.06);
+}
+.dotsbar{display:flex;gap:6px;justify-content:center;margin:14px 0 32px}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(194,150,60,.35);transition:all .3s ease}
+.dot.act{width:30px;border-radius:100px;background:var(--amw)}
+.dot.done{background:var(--br)}
+.fstep{display:none}
+.fstep.act{display:block;animation:slideIn .28s ease}
+.fh{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;color:var(--br);margin-bottom:6px;letter-spacing:-.01em}
+.fs{font-size:13px;color:var(--t2);margin-bottom:24px;font-weight:300;line-height:1.75}
+.errmsg{color:#b82818;font-size:13px;text-align:center;padding:10px 0;display:none;font-weight:500}
+.errmsg.show{display:block}
+
+/* ── SELECT CARDS ───────────────────────────────────── */
+.sc{
+  border:2px solid rgba(194,150,60,.32);
+  border-radius:16px;padding:15px;margin-bottom:11px;
+  cursor:pointer;transition:border-color .2s,background .15s;
+  display:flex;align-items:center;gap:13px;
+  background:var(--bg);-webkit-tap-highlight-color:transparent;
+  box-shadow:0 1px 6px rgba(30,9,0,.05);
+}
+.sc:active{transform:scale(.98)}
+.sc.sel{border-color:var(--amw);background:rgba(232,140,40,.1)}
+.scemoji{font-size:34px;flex-shrink:0}
+.scinfo{flex:1}
+.scname{font-family:'Cormorant Garamond',Georgia,serif;font-size:17px;color:var(--br);margin-bottom:2px}
+.scdesc{font-size:12px;color:var(--t2);font-weight:300}
+.scck{
+  width:22px;height:22px;border-radius:50%;
+  border:2px solid rgba(194,150,60,.45);flex-shrink:0;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;
+}
+.sc.sel .scck{background:var(--amw);border-color:var(--amw)}
+.sc.sel .scck::after{content:'';width:5px;height:9px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px);display:block}
+
+/* ── INLINE CUSTOMIZER ──────────────────────────────── */
+#fcust,#fspecial{
+  display:none;background:var(--bg);border-radius:14px;
+  padding:18px;border:1px solid rgba(194,150,60,.32);margin:-2px 0 16px;
+}
+#fcust.open,#fspecial.open{display:block;animation:hUp .25s ease}
+
+/* ── INPUTS ─────────────────────────────────────────── */
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:10px;font-weight:500;color:var(--t2);letter-spacing:.13em;text-transform:uppercase;margin-bottom:8px}
+.fg input,.fg textarea{
+  width:100%;padding:14px 16px;
+  border:1.5px solid rgba(194,150,60,.4);
+  border-radius:12px;font-size:16px;font-family:'DM Sans',sans-serif;
+  color:var(--br);background:var(--bg);outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.fg input:focus,.fg textarea:focus{
+  border-color:var(--amw);
+  box-shadow:0 0 0 3px rgba(232,140,40,.13);
+}
+.fg input.err{border-color:#c0392b;background:#fff6f5}
+.fg textarea{height:90px;resize:none;line-height:1.6}
+
+/* ── QUANTITY ───────────────────────────────────────── */
+.qwrap{display:flex;align-items:center;gap:16px;margin-bottom:26px}
+.qty{
+  display:flex;align-items:center;
+  border:1.5px solid rgba(194,150,60,.4);
+  border-radius:14px;overflow:hidden;background:var(--bg);
+  box-shadow:0 1px 6px rgba(30,9,0,.06);
+}
+.qbtn{
+  width:52px;height:54px;background:transparent;border:none;
+  font-size:26px;color:var(--brm);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;transition:background .12s;
+}
+.qbtn:active{background:var(--bg3)}
+.qval{width:44px;text-align:center;font-size:22px;font-weight:500;color:var(--br);font-family:'Cormorant Garamond',Georgia,serif}
+.qimain{font-size:14px;font-weight:500;color:var(--br)}
+.qinote{font-size:12px;color:var(--t3);font-weight:300;margin-top:2px}
+
+/* ── KRAFT PAPER SUMMARY ────────────────────────────── */
+.sumbox{
+  /* Lined kraft paper effect */
+  background:
+    repeating-linear-gradient(
+      transparent, transparent 27px,
+      rgba(148,92,20,.08) 27px, rgba(148,92,20,.08) 28px
+    ),
+    linear-gradient(162deg, #E8D490 0%, #CEB85A 100%);
+  border:1.5px solid #BAA040;
+  border-radius:16px;padding:20px 20px 16px;margin-bottom:18px;
+  box-shadow:
+    0 4px 18px rgba(90,50,0,.16),
+    inset 0 1px 0 rgba(255,240,170,.55);
+  position:relative;
+}
+/* Perforated tear top */
+.sumbox::before{
+  content:'';
+  position:absolute;top:-1px;left:0;right:0;height:1px;
+  background:repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(180,140,40,.5) 4px,rgba(180,140,40,.5) 8px);
+}
+.sr{display:flex;justify-content:space-between;align-items:flex-start;font-size:14px;padding:8px 0;border-bottom:1px dashed rgba(148,92,20,.18)}
+.sr:last-child{border-bottom:none}
+.sl{color:var(--t2);font-weight:300}
+.sv{color:var(--br);font-weight:500;text-align:right;max-width:60%;word-break:break-word}
+.sumnote{
+  font-size:12px;color:var(--t3);text-align:center;
+  margin-bottom:20px;font-style:italic;line-height:1.85;
+  padding:12px 0 0;border-top:1px dashed rgba(148,92,20,.18);
+}
+
+/* ── BUTTONS ────────────────────────────────────────── */
+.bn{
+  width:100%;background:var(--br);color:var(--bg);
+  border:none;padding:17px;border-radius:14px;
+  font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;display:block;text-align:center;text-decoration:none;
+  margin-top:8px;transition:opacity .12s,transform .12s;
+  box-shadow:0 4px 18px rgba(30,9,0,.26);letter-spacing:.02em;
+}
+.bn:active{opacity:.8;transform:scale(.97)}
+.bn:disabled{opacity:.5;cursor:default}
+.bk{
+  width:100%;background:transparent;color:var(--t2);
+  border:none;padding:12px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:2px;
+}
+
+/* ── CONFIRM ────────────────────────────────────────── */
+.conf{text-align:center;padding:24px 0}
+.conficon{font-size:78px;display:block;margin-bottom:18px;animation:popIn .5s ease}
+.confh{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;color:var(--br);margin-bottom:10px;letter-spacing:-.01em}
+.confp{font-size:14px;color:var(--t2);line-height:1.95;font-weight:300;margin-bottom:30px}
+
+/* ── FOOTER ─────────────────────────────────────────── */
+footer{
+  background:linear-gradient(170deg,#221000 0%,#160800 100%);
+  color:var(--bg);padding:52px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+footer::before{
+  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  width:420px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(194,78,8,.14) 0%,transparent 70%);
+  pointer-events:none;
+}
+.flogo{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:500;margin-bottom:6px;letter-spacing:.01em}
+.ftag{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(250,240,200,.32);margin-bottom:34px}
+.flinks{display:flex;justify-content:center;gap:24px;margin-bottom:28px}
+.flink{color:rgba(250,240,200,.5);text-decoration:none;font-size:13px;transition:color .2s}
+.flink:hover,.flink:active{color:rgba(250,240,200,.88)}
+.fcopy{font-size:10px;color:rgba(250,240,200,.16)}
+
+/* ── TSUKASSA HIDDEN SIG ─────────────────────────────── */
+.ftsukassa{
+  margin-top:22px;
+  font-size:9px;letter-spacing:.18em;
+  color:rgba(250,240,200,.07);
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  flex-wrap:wrap;
+  transition:color .4s;
+  font-family:'DM Sans',sans-serif;text-transform:lowercase;
+}
+.ftsukassa:hover{color:rgba(250,240,200,.28)}
+.ftsuk-name{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:11px;letter-spacing:.12em}
+.ftsuk-sep{opacity:.4}
+.ftsuk-tel{color:inherit;text-decoration:none}
+.ftsuk-tel:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* ── FLOATING WA ────────────────────────────────────── */
+.fwa{
+  position:fixed;bottom:24px;right:20px;z-index:200;
+  background:#25D366;color:#fff;
+  width:58px;height:58px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  box-shadow:0 5px 22px rgba(37,211,102,.46);
+}
+.fwa::after{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  border:2.5px solid rgba(37,211,102,.55);
+  animation:waRing 2.5s ease-out infinite;
+}
+.fwa:active{transform:scale(.9)}
+
+/* ── PRICING ON PRODUCT CARDS ───────────────────────── */
+.pprices{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.pp-each{font-size:13px;color:var(--t2);font-weight:300}
+.pp-dot{font-size:10px;color:var(--t3)}
+.pp-box{font-size:14px;font-weight:500;color:var(--br)}
+.pp-save{
+  background:rgba(194,78,8,.11);color:var(--am);
+  font-size:10px;font-weight:500;padding:3px 9px;border-radius:100px;
+  letter-spacing:.03em;
+}
+
+/* ── FORMAT PICKER ──────────────────────────────────── */
+.fmt-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 20px}
+.fmt-card{
+  border:2px solid rgba(194,150,60,.32);
+  border-radius:18px;padding:18px 12px 16px;
+  text-align:center;cursor:pointer;background:var(--bg);
+  transition:border-color .2s,background .15s;
+  position:relative;-webkit-tap-highlight-color:transparent;
+}
+.fmt-card:active{transform:scale(.97)}
+.fmt-card.sel{border-color:var(--amw);background:rgba(232,140,40,.1)}
+.fmt-badge{
+  position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  background:var(--am);color:#fff;
+  font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:100px;white-space:nowrap;
+}
+.fmt-em{font-size:30px;margin-bottom:8px}
+.fmt-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;color:var(--br);font-weight:500;margin-bottom:6px}
+.fmt-price{font-size:20px;font-weight:500;color:var(--br);font-family:'Cormorant Garamond',Georgia,serif;line-height:1.1}
+.fmt-was{font-size:11px;color:var(--t3);text-decoration:line-through;margin-bottom:1px}
+.fmt-free{font-size:11px;color:var(--am);font-weight:500;margin-top:2px}
+.fmt-sub{font-size:11px;color:var(--t2);font-weight:300;margin-top:3px}
+
+/* ── MIX ALLOCATOR ──────────────────────────────────── */
+.mix-alloc{
+  background:var(--card2);border-radius:14px;padding:16px;
+  border:1.5px dashed rgba(194,120,40,.35);margin-top:8px;display:none;
+}
+.mix-alloc.show{display:block;animation:hUp .25s ease}
+.mix-t{font-size:10px;font-weight:500;color:var(--t2);letter-spacing:.13em;text-transform:uppercase;margin-bottom:14px}
+.mix-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.mix-em{font-size:22px;flex-shrink:0}
+.mix-nm{flex:1;font-size:14px;color:var(--br)}
+.mix-ctrl{display:flex;align-items:center;border:1.5px solid rgba(194,150,60,.4);border-radius:10px;overflow:hidden;background:var(--bg)}
+.mix-btn{width:36px;height:36px;background:transparent;border:none;font-size:18px;color:var(--brm);cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+.mix-btn:active{background:var(--bg3)}
+.mix-v{width:30px;text-align:center;font-size:15px;font-weight:500;color:var(--br)}
+.mix-foot{
+  margin-top:10px;padding-top:10px;
+  border-top:1px dashed rgba(148,92,20,.18);
+  display:flex;justify-content:space-between;align-items:center;font-size:13px;
+}
+.mix-tl{color:var(--t2);font-weight:300}
+.mix-tv{font-weight:500}
+.mix-ok{color:#2a7d32}
+.mix-warn{color:#c0392b;font-size:11px}
+
+/* ── ESTIMATED PRICE ────────────────────────────────── */
+.est{
+  background:linear-gradient(135deg,rgba(232,140,40,.1),rgba(194,78,8,.06));
+  border:1.5px solid rgba(194,130,40,.28);
+  border-radius:14px;padding:14px 16px;margin:18px 0 2px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.est-left .estl{font-size:12px;color:var(--t2);font-weight:300;margin-bottom:2px}
+.est-left .estn{font-size:10px;color:var(--t3);font-weight:300}
+.esta{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;color:var(--br);font-weight:500}
+
+/* ── SELECT (delivery area) ─────────────────────────── */
+.fg select{
+  width:100%;padding:14px 40px 14px 16px;
+  border:1.5px solid rgba(194,150,60,.4);
+  border-radius:12px;font-size:16px;font-family:'DM Sans',sans-serif;
+  color:var(--br);background-color:var(--bg);outline:none;
+  -webkit-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23A86030' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+  transition:border-color .2s,box-shadow .2s;
+}
+.fg select:focus{border-color:var(--amw);box-shadow:0 0 0 3px rgba(232,140,40,.13)}
+.fg select.err{border-color:#c0392b;background-color:#fff6f5}
+.fg .fnote{font-size:11px;color:var(--t3);font-weight:300;margin-top:6px;line-height:1.6}
+
+/* ── CUSTOM NUT-BASE SUB-PICKER ──────────────────────── */
+.custnut-wrap{display:none}
+.custnut-wrap.show{display:block;animation:hUp .25s ease}
+.sugg-toggle{width:100%;margin-top:4px}
+.sugg-wrap{display:none;margin-top:10px}
+.sugg-wrap.open{display:block;animation:hUp .25s ease}
+.sugg-wrap textarea{
+  width:100%;padding:14px 16px;height:74px;resize:none;line-height:1.6;
+  border:1.5px dashed rgba(194,120,40,.45);border-radius:12px;
+  font-size:14px;font-family:'DM Sans',sans-serif;color:var(--br);
+  background:var(--bg);outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.sugg-wrap textarea:focus{border-color:var(--amw);box-shadow:0 0 0 3px rgba(232,140,40,.13)}
+.sugg-note{font-size:11px;color:var(--am);font-weight:500;margin-top:6px;line-height:1.6}
+
+/* ── ACCESSIBILITY: keyboard focus ───────────────────── */
+.chip:focus-visible,.sc:focus-visible,.fmt-card:focus-visible,.pc:focus-visible{
+  outline:2px solid var(--amw);outline-offset:3px;
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  .rv{opacity:1;transform:none}
+}
+
+/* ── LANGUAGE SWITCHER ──────────────────────────────── */
+.lang-wrap{position:relative}
+.langbtn{
+  background:var(--bg3);color:var(--br);
+  border:1.5px solid rgba(194,150,60,.4);
+  border-radius:100px;padding:8px 13px;
+  font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+  -webkit-tap-highlight-color:transparent;white-space:nowrap;
+}
+.langbtn:active{transform:scale(.95)}
+.langmenu{
+  position:absolute;top:calc(100% + 8px);left:0;z-index:300;
+  background:var(--card);border:1.5px solid rgba(194,150,60,.4);
+  border-radius:16px;padding:6px;
+  box-shadow:0 6px 24px rgba(30,9,0,.18);
+  display:none;flex-direction:column;gap:2px;min-width:140px;
+}
+.langmenu.open{display:flex;animation:hUp .2s ease}
+.langopt{
+  background:transparent;border:none;text-align:left;
+  padding:10px 12px;border-radius:10px;font-size:13px;
+  font-family:'DM Sans',sans-serif;color:var(--t1);cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.langopt:active{background:var(--bg3)}
+.langopt.active{background:rgba(232,140,40,.14);color:var(--br);font-weight:500}
+
+/* ── RTL (Arabic) ─────────────────────────────────────── */
+html[dir="rtl"] body{font-family:'DM Sans','Tahoma',sans-serif}
+html[dir="rtl"] .langmenu{left:auto;right:0}
+html[dir="rtl"] .langopt{text-align:right}
+html[dir="rtl"] .nl{text-align:right}
+html[dir="rtl"] .fwa{right:auto;left:20px}
+html[dir="rtl"] .pbadge{right:auto;left:14px}
+html[dir="rtl"] .csl{left:50%;right:auto;transform:translate(-50%,-50%)}
+html[dir="rtl"] .scck::after{transform:rotate(-45deg) translateY(-1px) scaleX(-1)}
+html[dir="rtl"] .fmt-badge{left:50%;right:auto;transform:translateX(-50%)}
+html[dir="rtl"] .hh1 em{font-style:normal}
+/* ── FALLBACK MODAL ─────────────────────────────────── */
+.sc-modal-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(30,9,0,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  align-items:flex-end;justify-content:center;
+}
+.sc-modal-overlay.open{display:flex;animation:hUp .22s ease}
+.sc-modal{
+  background:var(--card);border-radius:24px 24px 0 0;
+  padding:28px 22px 36px;width:100%;max-width:480px;
+  box-shadow:0 -6px 32px rgba(30,9,0,.22);
+  border-top:1px solid rgba(194,150,60,.28);
+}
+.sc-modal-icon{font-size:36px;display:block;margin-bottom:12px;text-align:center}
+.sc-modal-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:500;color:var(--br);text-align:center;margin-bottom:8px}
+.sc-modal-msg{font-size:14px;color:var(--t2);text-align:center;line-height:1.75;margin-bottom:24px;font-weight:300}
+.sc-modal-actions{display:flex;flex-direction:column;gap:10px}
+</style>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="lang-wrap">
+    <button class="langbtn" id="langBtn" aria-label="Change language">
+      <span id="langFlag">🇬🇧</span> <span id="langLabel">EN</span>
+    </button>
+    <div class="langmenu" id="langMenu">
+      <button class="langopt active" data-lang="en">🇬🇧 English</button>
+      <button class="langopt" data-lang="fr">🇫🇷 Français</button>
+      <button class="langopt" data-lang="ar">🇩🇿 العربية</button>
+    </div>
+  </div>
+  <div class="nl">Sunset<small>Cookies</small></div>
+  <a href="https://wa.me/213555092508" class="nwa wa-link" target="_blank" rel="noopener">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+    <span data-i18n="nav.whatsapp">WhatsApp</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hg2"></div>
+  <div class="hg1"></div>
+
+  <span class="crumb cr1" aria-hidden="true">🍪</span>
+  <span class="crumb cr2" aria-hidden="true">✨</span>
+  <span class="crumb cr3" aria-hidden="true">🌰</span>
+  <span class="crumb cr4" aria-hidden="true">🍫</span>
+  <span class="crumb cr5" aria-hidden="true">🥜</span>
+
+  <span class="hcookie" aria-hidden="true">🍪</span>
+  <p class="heye" data-i18n="hero.eyebrow">Algiers · Freshly baked, every time</p>
+  <h1 class="hh1" data-i18n="hero.title">Sweet<br><em>moments</em><br>start here</h1>
+  <p class="hsub" data-i18n="hero.sub">Every cookie starts with a brown-butter base —<br>simple ingredients, no preservatives, just love.</p>
+  <a href="#order" class="hcta" data-i18n="hero.cta">Order now</a>
+  <div class="hscroll" aria-hidden="true">↓</div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="sec" id="products">
+  <p class="seye rv" data-i18n="products.eyebrow">Our cookies</p>
+  <h2 class="sh rv rv1" data-i18n="products.title">Pick your favourite</h2>
+  <p class="ssub rv rv2" data-i18n="products.sub">Every batch baked fresh — no preservatives, just real ingredients.</p>
+
+  <div class="grid">
+
+    <div class="pc rv">
+      <span class="pbadge" data-i18n="products.classic.badge">Bestseller</span>
+      <span class="pemoji">🍪</span>
+      <h3 class="pname" data-i18n="products.classic.name">Chocolate chip</h3>
+      <p class="pdesc" data-i18n="products.classic.desc">A brown-butter base, golden and nutty, with pools of melted chocolate in every bite. Classic done perfectly — the one that started it all.</p>
+      <div class="pprices">
+        <span class="pp-each" data-i18n="products.classic.each">150 DA / cookie</span>
+        <span class="pp-dot">·</span>
+        <span class="pp-box" data-i18n="products.classic.box">750 DA / box of 6</span>
+        <span class="pp-save" data-i18n="products.classic.save">Save 150 DA</span>
+      </div>
+      <button class="bd" id="btn-classic" data-i18n="products.classic.btn">Order this</button>
+    </div>
+
+    <div class="pc rv rv1">
+      <span class="pbadge" data-i18n="products.nuts.badge">Mix it in</span>
+      <span class="pemoji">🥜</span>
+      <h3 class="pname" data-i18n="products.nuts.name">Nutty &amp; fruity</h3>
+      <p class="pdesc" data-i18n="products.nuts.desc">The same brown-butter base, loaded with the nuts and/or dried fruit you choose — mixed right into the dough.</p>
+      <div class="pprices">
+        <span class="pp-each" data-i18n="products.nuts.each">200 DA / cookie</span>
+        <span class="pp-dot">·</span>
+        <span class="pp-box" data-i18n="products.nuts.box">1 000 DA / box of 6</span>
+        <span class="pp-save" data-i18n="products.nuts.save">Save 200 DA</span>
+      </div>
+      <button class="bo" id="btn-open-special" data-i18n="products.nuts.btn">Choose mix-ins →</button>
+    </div>
+
+    <div class="pc rv rv2">
+      <span class="pbadge" data-i18n="products.custom.badge">Build your own</span>
+      <span class="pemoji">🎨</span>
+      <h3 class="pname" data-i18n="products.custom.name">Make it yours</h3>
+      <p class="pdesc" data-i18n="products.custom.desc">Same brown-butter base — pick it plain or nutted, then pile on the toppings you love.</p>
+      <div class="pprices">
+        <span class="pp-each" data-i18n="products.custom.each">200 DA / cookie</span>
+        <span class="pp-dot">·</span>
+        <span class="pp-box" data-i18n="products.custom.box">1 000 DA / box of 6</span>
+        <span class="pp-save" data-i18n="products.custom.save">Save 200 DA</span>
+      </div>
+      <button class="bo" id="btn-open-cust" data-i18n="products.custom.btn">Customize →</button>
+    </div>
+
+    <div class="csw rv">
+      <div class="csc" aria-hidden="true">
+        <span class="pemoji">🌙</span>
+        <h3 class="pname" data-i18n="products.midnight.name">Midnight special</h3>
+        <p class="pdesc" data-i18n="products.midnight.desc">Something dark and indulgent is in the works. Stay tuned.</p>
+        <button class="bd" data-i18n="products.comingsoon">Coming soon</button>
+      </div>
+      <div class="csl" data-i18n="products.midnight.label">Coming soon 🌙</div>
+    </div>
+
+    <div class="csw rv rv1">
+      <div class="csc" aria-hidden="true">
+        <span class="pemoji">🎁</span>
+        <h3 class="pname" data-i18n="products.gift.name">Gift boxes</h3>
+        <p class="pdesc" data-i18n="products.gift.desc">Curated cookie boxes for birthdays and celebrations.</p>
+        <button class="bd" data-i18n="products.comingsoon">Coming soon</button>
+      </div>
+      <div class="csl" data-i18n="products.gift.label">Coming soon 🎁</div>
+    </div>
+
+    <p class="cstease rv"><span data-i18n="products.followPrefix">Follow </span><a href="https://instagram.com/sun_setcookies" class="ig-link" target="_blank" rel="noopener">@sun_setcookies</a><span data-i18n="products.followSuffix"> to be first to know 🌅</span></p>
+
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider rv" aria-hidden="true"><span>🌅</span></div>
+
+<!-- HOW IT WORKS -->
+<div class="hiw rv" style="margin:28px 12px 0">
+  <p class="seye" data-i18n="hiw.eyebrow">How it works</p>
+  <h2 class="sh" data-i18n="hiw.title">So simple</h2>
+  <div class="steps">
+    <div class="step rv">
+      <div class="stepn">👆</div>
+      <div class="stept">
+        <h4 data-i18n="hiw.step1.title">Pick your cookie</h4>
+        <p data-i18n="hiw.step1.desc">Browse the selection or build your own with the toppings you love.</p>
+      </div>
+    </div>
+    <div class="step rv rv1">
+      <div class="stepn">📝</div>
+      <div class="stept">
+        <h4 data-i18n="hiw.step2.title">Fill the form</h4>
+        <p data-i18n="hiw.step2.desc">Two minutes, no account needed — just your order and how to reach you.</p>
+      </div>
+    </div>
+    <div class="step rv rv2">
+      <div class="stepn">📞</div>
+      <div class="stept">
+        <h4 data-i18n="hiw.step3.title">We call to confirm</h4>
+        <p data-i18n="hiw.step3.desc">We reach out within 24 hours to confirm and arrange delivery to your door.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER FORM -->
+<section class="ordsec" id="order">
+  <p class="seye" style="text-align:center" data-i18n="order.eyebrow">Place your order</p>
+  <h2 class="sh" style="text-align:center" data-i18n="order.title">Let's get baking</h2>
+
+  <div class="dotsbar" id="dotsbar">
+    <div class="dot act" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
+    <div class="dot" id="d4"></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="fstep act" id="s1">
+    <h3 class="fh" data-i18n="s1.h">What would you like?</h3>
+    <p class="fs" data-i18n="s1.sub">Tap to select — you can pick more than one.</p>
+
+    <div class="sc" id="fc-classic" data-type="classic" role="button" tabindex="0">
+      <div class="scemoji">🍪</div>
+      <div class="scinfo"><div class="scname" data-i18n="s1.classic.name">Chocolate chip</div><div class="scdesc" data-i18n="s1.classic.desc">Brown-butter base, classic choc chip</div></div>
+      <div class="scck"></div>
+    </div>
+    <div class="sc" id="fc-nuts" data-type="nuts" role="button" tabindex="0">
+      <div class="scemoji">🥜</div>
+      <div class="scinfo"><div class="scname" data-i18n="s1.nuts.name">Nutty &amp; fruity</div><div class="scdesc" data-i18n="s1.nuts.desc">Choose nuts and/or dried fruit, baked in</div></div>
+      <div class="scck"></div>
+    </div>
+
+    <!-- Nutty & fruity mix-in panel -->
+    <div id="fspecial">
+      <p class="ol" style="margin-bottom:10px" data-i18n="s1.nutsPanel.nuts">Nuts <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:300" data-i18n="s1.pickUp2">(pick up to 2)</span></p>
+      <div class="opts">
+        <button class="chip" data-g="nut" data-i18n="chip.walnuts">Walnuts</button>
+        <button class="chip" data-g="nut" data-i18n="chip.almonds">Almonds</button>
+        <button class="chip" data-g="nut" data-i18n="chip.hazelnuts">Hazelnuts</button>
+        <button class="chip" data-g="nut" data-i18n="chip.peanuts">Peanuts</button>
+        <button class="chip" data-g="nut" data-i18n="chip.pistachios">Pistachios</button>
+      </div>
+      <p class="ol" style="margin-bottom:10px" data-i18n="s1.nutsPanel.dried">Dried fruit <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:300" data-i18n="s1.pickUp2">(pick up to 2)</span></p>
+      <div class="opts">
+        <button class="chip" data-g="dry" data-i18n="chip.raisins">Raisins</button>
+        <button class="chip" data-g="dry" data-i18n="chip.cranberries">Dried cranberries</button>
+        <button class="chip" data-g="dry" data-i18n="chip.apricots">Dried apricots</button>
+        <button class="chip" data-g="dry" data-i18n="chip.figs">Figs</button>
+      </div>
+    </div>
+
+    <div class="sc" id="fc-custom" data-type="custom" role="button" tabindex="0">
+      <div class="scemoji">🎨</div>
+      <div class="scinfo"><div class="scname" data-i18n="s1.custom.name">Custom cookie</div><div class="scdesc" data-i18n="s1.custom.desc">I'll pick my base &amp; toppings</div></div>
+      <div class="scck"></div>
+    </div>
+
+    <!-- Custom cookie panel -->
+    <div id="fcust">
+      <p class="ol" style="margin-bottom:10px" data-i18n="s1.custom.base">Base</p>
+      <div class="opts">
+        <button class="chip sel" data-g="base" data-value="normal" data-i18n="chip.baseNormal">Normal (brown butter)</button>
+        <button class="chip" data-g="base" data-value="nutted" data-i18n="chip.baseNutted">Nutted (brown butter + nuts)</button>
+      </div>
+      <div class="custnut-wrap">
+        <p class="ol" style="margin-bottom:10px" data-i18n="s1.custom.pickNuts">Pick your nuts <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:300" data-i18n="s1.maxTwo">(max 2)</span></p>
+        <div class="opts">
+          <button class="chip" data-g="custnut" data-i18n="chip.walnuts">Walnuts</button>
+          <button class="chip" data-g="custnut" data-i18n="chip.almonds">Almonds</button>
+          <button class="chip" data-g="custnut" data-i18n="chip.hazelnuts">Hazelnuts</button>
+          <button class="chip" data-g="custnut" data-i18n="chip.peanuts">Peanuts</button>
+          <button class="chip" data-g="custnut" data-i18n="chip.pistachios">Pistachios</button>
+        </div>
+      </div>
+      <p class="ol" style="margin-bottom:10px" data-i18n="s1.custom.toppings">Toppings <span style="font-size:10px;text-transform:none;letter-spacing:0;font-weight:300" data-i18n="s1.pickUp2">(pick up to 2)</span></p>
+      <div class="opts">
+        <button class="chip sel" data-g="top" data-i18n="chip.cremeBueno">Crème Bueno</button>
+        <button class="chip" data-g="top" data-i18n="chip.cremePistache">Crème Pistache</button>
+        <button class="chip" data-g="top" data-i18n="chip.nutella">Nutella</button>
+        <button class="chip" data-g="top" data-i18n="chip.bueno">Bueno</button>
+        <button class="chip" data-g="top" data-i18n="chip.kitkat">KitKat</button>
+        <button class="chip" data-g="top" data-i18n="chip.mms">M&amp;Ms</button>
+        <button class="chip" data-g="top" data-i18n="chip.kindermaxi">Kinder Maxi</button>
+        <button class="chip" data-g="top" data-i18n="chip.chocchunks">Chocolate chunks</button>
+      </div>
+      <p class="ol" style="margin-bottom:10px" data-i18n="s1.custom.gotIdea">Got your own idea?</p>
+      <button class="chip sugg-toggle" data-g="sugg" data-i18n="s1.custom.suggest">✨ Suggest your own combo — 250 DA</button>
+      <div class="sugg-wrap">
+        <textarea class="sugg-text" data-i18n-placeholder="s1.custom.suggestPh" placeholder="Tell us what you're craving — we'll do our best to make it!"></textarea>
+        <p class="sugg-note" data-i18n="s1.custom.suggestNote">Selecting this sets your cookie to 250 DA / cookie · 1 250 DA / box of 6.</p>
+      </div>
+    </div>
+
+    <div class="errmsg" id="err1" data-i18n="s1.err">⚠️ Please select at least one cookie first</div>
+    <button class="bn" id="to-s2" data-i18n="btn.continue">Continue →</button>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="fstep" id="s2">
+    <h3 class="fh" data-i18n="s2.h">Single or a box?</h3>
+    <p class="fs" data-i18n="s2.sub">Boxes give you one cookie on us.</p>
+
+    <!-- Format picker -->
+    <div class="fmt-grid">
+      <div class="fmt-card sel" id="fmt-single" onclick="setFormat('single')" role="button" tabindex="0">
+        <div class="fmt-em">🍪</div>
+        <div class="fmt-name" data-i18n="s2.single">Single</div>
+        <div class="fmt-price" id="fp-single-price">150 DA</div>
+        <div class="fmt-sub" data-i18n="s2.perCookie">per cookie</div>
+      </div>
+      <div class="fmt-card" id="fmt-box" onclick="setFormat('box')" role="button" tabindex="0">
+        <div class="fmt-badge" data-i18n="s2.bestValue">Best value</div>
+        <div class="fmt-em">📦</div>
+        <div class="fmt-name" data-i18n="s2.box">Box of 6</div>
+        <div class="fmt-was" id="fp-box-was">900 DA</div>
+        <div class="fmt-price" id="fp-box-price">750 DA</div>
+        <div class="fmt-free" id="fp-box-free" data-i18n="s2.oneFree">one cookie free 🎉</div>
+      </div>
+    </div>
+
+    <!-- Quantity -->
+    <p class="ol" style="margin-bottom:12px" id="qty-label" data-i18n="s2.howManyCookies">How many cookies?</p>
+    <div class="qwrap">
+      <div class="qty">
+        <button class="qbtn" id="qminus">−</button>
+        <span class="qval" id="qval">1</span>
+        <button class="qbtn" id="qplus">+</button>
+      </div>
+      <div>
+        <div class="qimain" id="qlbl">1 cookie</div>
+        <div class="qinote" id="qnote" data-i18n="s2.pickAsMany">Pick as many as you like</div>
+      </div>
+    </div>
+
+    <!-- Mix allocator (shown when 2+ types selected) -->
+    <div class="mix-alloc" id="mix-alloc">
+      <p class="mix-t" id="mix-title" data-i18n="s2.mixTitleBox">Your box mix <span style="font-weight:300;text-transform:none;letter-spacing:0" data-i18n="s2.mustTotal6">(must total 6)</span></p>
+      <div id="mix-rows"></div>
+      <div class="mix-foot">
+        <span class="mix-tl" id="mix-tl" data-i18n="s2.cookiesPerBox">Cookies per box</span>
+        <span><span class="mix-tv" id="mix-tv">0</span> <span id="mix-status" class="mix-warn"></span></span>
+      </div>
+    </div>
+
+    <!-- Estimated price -->
+    <div class="est">
+      <div class="est-left">
+        <div class="estl" data-i18n="s2.estTotal">Estimated total</div>
+        <div class="estn" id="est-sub" data-i18n="s2.exactConfirmed">Exact price confirmed on call</div>
+      </div>
+      <div class="esta" id="est-amount">150 DA</div>
+    </div>
+    <p class="fnote" style="margin:8px 2px 0" data-i18n="s2.deliveryNote">+ delivery fee, based on your area (next step)</p>
+
+    <div class="fg" style="margin-top:18px">
+      <label data-i18n="s2.noteLabel">Special note (optional)</label>
+      <textarea id="f-note" data-i18n-placeholder="s2.notePh" placeholder="Allergies, special requests, gift message…"></textarea>
+    </div>
+    <button class="bn" id="to-s3" data-i18n="btn.continue">Continue →</button>
+    <button class="bk" id="back1" data-i18n="btn.back">← Back</button>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="fstep" id="s3">
+    <h3 class="fh" data-i18n="s3.h">Your details</h3>
+    <p class="fs" data-i18n="s3.sub">So we know how to reach you — and where to deliver.</p>
+    <div class="fg"><label data-i18n="s3.fullName">Full name</label><input type="text" id="f-name" data-i18n-placeholder="s3.fullNamePh" placeholder="Your name" autocomplete="name"></div>
+    <div class="fg"><label data-i18n="s3.phone">Phone number</label><input type="tel" id="f-phone" placeholder="+213 …" autocomplete="tel"></div>
+    <div class="errmsg" id="err-phone" data-i18n="s3.errPhone">⚠️ Please enter a valid Algerian phone number</div>
+    <div class="fg">
+      <label data-i18n="s3.zone">Delivery area</label>
+      <select id="f-zone">
+        <option value="" data-i18n="s3.zoneSelect">Select your area…</option>
+        <optgroup label="100 DA">
+          <option value="100">Ouled Fayet</option>
+        </optgroup>
+        <optgroup label="150 DA">
+          <option value="150">Chéraga</option>
+          <option value="150">Dély Brahim</option>
+          <option value="150">Bouchaoui</option>
+          <option value="150">El Achour</option>
+          <option value="150">Draria</option>
+          <option value="150">Ben Aknoun</option>
+          <option value="150">Beni Messous</option>
+          <option value="150">Souidania</option>
+        </optgroup>
+        <optgroup label="200 DA">
+          <option value="200">Baba Hassen</option>
+          <option value="200">Birkhadem</option>
+          <option value="200">Douera</option>
+          <option value="200">Zéralda</option>
+          <option value="200">El Biar</option>
+          <option value="200">Hydra</option>
+          <option value="200">Bir Mourad Raïs</option>
+          <option value="200">Saoula</option>
+        </optgroup>
+        <optgroup label="280 DA">
+          <option value="280">Kouba</option>
+          <option value="280">Hussein Dey</option>
+          <option value="280">Bab El Oued</option>
+          <option value="280">Belouizdad</option>
+          <option value="280">El Madania</option>
+          <option value="280">Sidi M'Hamed</option>
+          <option value="280">Bachdjerrah</option>
+          <option value="280">Gué de Constantine</option>
+          <option value="280">Bourouba</option>
+        </optgroup>
+        <optgroup label="350 DA">
+          <option value="350">Alger Centre</option>
+          <option value="350">Bab Ezzouar</option>
+          <option value="350">El Harrach</option>
+        </optgroup>
+        <optgroup label="400 DA">
+          <option value="400">Dar El Beïda</option>
+          <option value="400">Bordj El Kiffan</option>
+          <option value="400">El Magharia</option>
+          <option value="400">Mohammadia</option>
+          <option value="400">Rouiba</option>
+          <option value="400">Reghaïa</option>
+        </optgroup>
+        <optgroup label="Other" data-i18n-label="s3.zoneOtherGroup">
+          <option value="other" data-i18n="s3.zoneOther">Somewhere else in Algiers</option>
+        </optgroup>
+      </select>
+      <p class="fnote" data-i18n="s3.zoneNote">Outside this list? Pick "Somewhere else" — we'll confirm the delivery fee on call.</p>
+    </div>
+    <div class="fg"><label data-i18n="s3.address">Address / landmark</label><input type="text" id="f-loc" data-i18n-placeholder="s3.addressPh" placeholder="Street, building, nearby landmark…"></div>
+    <div class="errmsg" id="err3" data-i18n="s3.err">⚠️ Please fill in all fields and select your area</div>
+    <button class="bn" id="to-s4" data-i18n="s3.review">Review my order →</button>
+    <button class="bk" id="back2" data-i18n="btn.back">← Back</button>
+  </div>
+
+  <!-- STEP 4 — kraft summary -->
+  <div class="fstep" id="s4">
+    <h3 class="fh" data-i18n="s4.h">Your order</h3>
+    <p class="fs" data-i18n="s4.sub">Everything look right?</p>
+    <div class="sumbox">
+      <div class="sr"><span class="sl" data-i18n="s4.cookie">Cookie</span><span class="sv" id="su-c">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.format">Format</span><span class="sv" id="su-fmt">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.quantity">Quantity</span><span class="sv" id="su-q">—</span></div>
+      <div class="sr" id="su-mix-row" style="display:none"><span class="sl" data-i18n="s4.mix">Mix</span><span class="sv" id="su-mix">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.name">Name</span><span class="sv" id="su-n">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.phone">Phone</span><span class="sv" id="su-p">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.zone">Delivery area</span><span class="sv" id="su-zone">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.address">Address</span><span class="sv" id="su-l">—</span></div>
+      <div class="sr" id="su-nr" style="display:none"><span class="sl" data-i18n="s4.note">Note</span><span class="sv" id="su-note">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.subtotal">Subtotal</span><span class="sv" id="su-sub">—</span></div>
+      <div class="sr"><span class="sl" data-i18n="s4.delivery">Delivery</span><span class="sv" id="su-deliv">—</span></div>
+      <div class="sr" style="margin-top:4px"><span class="sl" style="font-weight:500;color:var(--br)" data-i18n="s4.estTotal">Est. total</span><span class="sv" style="font-size:18px;font-family:'Cormorant Garamond',Georgia,serif" id="su-price">—</span></div>
+    </div>
+    <p class="sumnote" data-i18n="s4.sumnote">No payment needed yet — we'll call within 24 hours to confirm the exact total and arrange delivery.</p>
+    <button class="bn" id="submit-btn" data-i18n="s4.submit">Place my order 🍪</button>
+    <button class="bk" id="back3" data-i18n="s4.edit">← Edit</button>
+  </div>
+
+  <!-- CONFIRM -->
+  <div class="fstep" id="s-conf">
+    <div class="conf">
+      <span class="conficon">🌅</span>
+      <h3 class="confh" data-i18n="conf.h">Order received!</h3>
+      <p class="confp" data-i18n="conf.p">We got your order and will call within 24 hours to confirm and arrange delivery.</p>
+      <p id="conf-ref" style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;color:var(--brm);font-weight:500;margin-bottom:24px;letter-spacing:.05em"></p>
+      <button class="bn" id="new-order-btn" data-i18n="conf.newOrder">Place another order 🍪</button>
+      <a href="https://wa.me/213555092508" class="bk wa-link" id="conf-wa-link" style="display:block;text-align:center;text-decoration:none;padding:12px" target="_blank" rel="noopener" data-i18n="conf.whatsapp">Message us on WhatsApp</a>
+      <a href="https://instagram.com/sun_setcookies" class="bk ig-link" style="display:block;text-align:center;text-decoration:none;padding:12px" target="_blank" rel="noopener" data-i18n="conf.instagram">Follow us on Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">Sunset Cookies</div>
+  <div class="ftag" data-i18n="footer.tagline">Simple ingredients, sweet moments</div>
+  <div class="flinks">
+    <a href="https://instagram.com/sun_setcookies" class="flink ig-link" target="_blank" rel="noopener">📸 @sun_setcookies</a>
+    <a href="https://wa.me/213555092508" class="flink wa-link" target="_blank" rel="noopener">💬 <span data-i18n="nav.whatsapp">WhatsApp</span></a>
+  </div>
+  <div class="fcopy" data-i18n="footer.copy">© 2026 Sunset Cookies · Algiers, Algeria</div>
+  <div class="ftsukassa" aria-hidden="true">
+    <span class="ftsuk-name">tsukassa</span>
+    <span class="ftsuk-sep">·</span>
+    <a href="tel:+213555092508" class="ftsuk-tel">+213 555 09 25 08</a>
+    <span class="ftsuk-sep">·</span>
+    <a href="tel:+213658544419" class="ftsuk-tel">+213 658 54 44 19</a>
+  </div>
+</footer>
+
+<!-- FALLBACK MODAL -->
+<div class="sc-modal-overlay" id="sc-fallback-modal" role="dialog" aria-modal="true">
+  <div class="sc-modal">
+    <span class="sc-modal-icon">😬</span>
+    <p class="sc-modal-title" id="sc-modal-title">Something went wrong</p>
+    <p class="sc-modal-msg" id="sc-modal-msg">We couldn't send your order. Tap below to send it to us directly on WhatsApp.</p>
+    <div class="sc-modal-actions">
+      <a id="sc-modal-wa-btn" href="#" target="_blank" rel="noopener" class="bn" style="text-align:center;text-decoration:none;display:block;padding:16px">
+        💬 Send via WhatsApp
+      </a>
+      <button id="sc-modal-close" class="bk" style="border:none;cursor:pointer">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/213555092508" class="fwa wa-link" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="27" height="27" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
+
+<script>
+// ════════════════════════════════════════════════
+// ── I18N ──
+// ════════════════════════════════════════════════
+var I18N = {
+en: {
+  "nav.whatsapp":"WhatsApp",
+  "hero.eyebrow":"Algiers · Freshly baked, every time",
+  "hero.title":"Sweet<br><em>moments</em><br>start here",
+  "hero.sub":"Every cookie starts with a brown-butter base —<br>simple ingredients, no preservatives, just love.",
+  "hero.cta":"Order now",
+  "products.eyebrow":"Our cookies",
+  "products.title":"Pick your favourite",
+  "products.sub":"Every batch baked fresh — no preservatives, just real ingredients.",
+  "products.classic.badge":"Bestseller",
+  "products.classic.name":"Chocolate chip",
+  "products.classic.desc":"A brown-butter base, golden and nutty, with pools of melted chocolate in every bite. Classic done perfectly — the one that started it all.",
+  "products.classic.each":"150 DA / cookie",
+  "products.classic.box":"750 DA / box of 6",
+  "products.classic.save":"Save 150 DA",
+  "products.classic.btn":"Order this",
+  "products.nuts.badge":"Mix it in",
+  "products.nuts.name":"Nutty &amp; fruity",
+  "products.nuts.desc":"The same brown-butter base, loaded with the nuts and/or dried fruit you choose — mixed right into the dough.",
+  "products.nuts.each":"200 DA / cookie",
+  "products.nuts.box":"1 000 DA / box of 6",
+  "products.nuts.save":"Save 200 DA",
+  "products.nuts.btn":"Choose mix-ins →",
+  "products.custom.badge":"Build your own",
+  "products.custom.name":"Make it yours",
+  "products.custom.desc":"Same brown-butter base — pick it plain or nutted, then pile on the toppings you love.",
+  "products.custom.each":"200 DA / cookie",
+  "products.custom.box":"1 000 DA / box of 6",
+  "products.custom.save":"Save 200 DA",
+  "products.custom.btn":"Customize →",
+  "products.comingsoon":"Coming soon",
+  "products.midnight.name":"Midnight special",
+  "products.midnight.desc":"Something dark and indulgent is in the works. Stay tuned.",
+  "products.midnight.label":"Coming soon 🌙",
+  "products.gift.name":"Gift boxes",
+  "products.gift.desc":"Curated cookie boxes for birthdays and celebrations.",
+  "products.gift.label":"Coming soon 🎁",
+  "products.followPrefix":"Follow ",
+  "products.followSuffix":" to be first to know 🌅",
+  "hiw.eyebrow":"How it works",
+  "hiw.title":"So simple",
+  "hiw.step1.title":"Pick your cookie",
+  "hiw.step1.desc":"Browse the selection or build your own with the toppings you love.",
+  "hiw.step2.title":"Fill the form",
+  "hiw.step2.desc":"Two minutes, no account needed — just your order and how to reach you.",
+  "hiw.step3.title":"We call to confirm",
+  "hiw.step3.desc":"We reach out within 24 hours to confirm and arrange delivery to your door.",
+  "order.eyebrow":"Place your order",
+  "order.title":"Let's get baking",
+  "s1.h":"What would you like?",
+  "s1.sub":"Tap to select — you can pick more than one.",
+  "s1.classic.name":"Chocolate chip",
+  "s1.classic.desc":"Brown-butter base, classic choc chip",
+  "s1.nuts.name":"Nutty &amp; fruity",
+  "s1.nuts.desc":"Choose nuts and/or dried fruit, baked in",
+  "s1.nutsPanel.nuts":"Nuts",
+  "s1.nutsPanel.dried":"Dried fruit",
+  "s1.pickUp2":"(pick up to 2)",
+  "s1.custom.name":"Custom cookie",
+  "s1.custom.desc":"I'll pick my base &amp; toppings",
+  "s1.custom.base":"Base",
+  "s1.custom.pickNuts":"Pick your nuts",
+  "s1.maxTwo":"(max 2)",
+  "s1.custom.toppings":"Toppings",
+  "s1.custom.gotIdea":"Got your own idea?",
+  "s1.custom.suggest":"✨ Suggest your own combo — 250 DA",
+  "s1.custom.suggestPh":"Tell us what you're craving — we'll do our best to make it!",
+  "s1.custom.suggestNote":"Selecting this sets your cookie to 250 DA / cookie · 1 250 DA / box of 6.",
+  "s1.err":"⚠️ Please select at least one cookie first",
+  "chip.walnuts":"Walnuts","chip.almonds":"Almonds","chip.hazelnuts":"Hazelnuts","chip.peanuts":"Peanuts","chip.pistachios":"Pistachios",
+  "chip.raisins":"Raisins","chip.cranberries":"Dried cranberries","chip.apricots":"Dried apricots","chip.figs":"Figs",
+  "chip.baseNormal":"Normal (brown butter)","chip.baseNutted":"Nutted (brown butter + nuts)",
+  "chip.cremeBueno":"Crème Bueno","chip.cremePistache":"Crème Pistache","chip.nutella":"Nutella","chip.bueno":"Bueno",
+  "chip.kitkat":"KitKat","chip.mms":"M&amp;Ms","chip.kindermaxi":"Kinder Maxi","chip.chocchunks":"Chocolate chunks",
+  "btn.continue":"Continue →",
+  "btn.back":"← Back",
+  "s2.h":"Single or a box?",
+  "s2.sub":"Boxes give you one cookie on us.",
+  "s2.single":"Single","s2.perCookie":"per cookie",
+  "s2.bestValue":"Best value","s2.box":"Box of 6","s2.oneFree":"one cookie free 🎉",
+  "s2.howManyCookies":"How many cookies?",
+  "s2.pickAsMany":"Pick as many as you like",
+  "s2.mixTitleBox":"Your box mix",
+  "s2.mustTotal6":"(must total 6)",
+  "s2.cookiesPerBox":"Cookies per box",
+  "s2.estTotal":"Estimated total",
+  "s2.exactConfirmed":"Exact price confirmed on call",
+  "s2.deliveryNote":"+ delivery fee, based on your area (next step)",
+  "s2.noteLabel":"Special note (optional)",
+  "s2.notePh":"Allergies, special requests, gift message…",
+  "s3.h":"Your details",
+  "s3.sub":"So we know how to reach you — and where to deliver.",
+  "s3.fullName":"Full name","s3.fullNamePh":"Your name",
+  "s3.phone":"Phone number",
+  "s3.zone":"Delivery area",
+  "s3.zoneSelect":"Select your area…",
+  "s3.zoneOtherGroup":"Other",
+  "s3.zoneOther":"Somewhere else in Algiers",
+  "s3.zoneNote":"Outside this list? Pick \"Somewhere else\" — we'll confirm the delivery fee on call.",
+  "s3.address":"Address / landmark","s3.addressPh":"Street, building, nearby landmark…",
+  "s3.err":"⚠️ Please fill in all fields and select your area",
+  "s3.errPhone":"⚠️ Please enter a valid Algerian phone number (e.g. 05 XX XX XX XX)",
+  "s3.review":"Review my order →",
+  "s4.h":"Your order",
+  "s4.sub":"Everything look right?",
+  "s4.cookie":"Cookie","s4.format":"Format","s4.quantity":"Quantity","s4.mix":"Mix",
+  "s4.name":"Name","s4.phone":"Phone","s4.zone":"Delivery area","s4.address":"Address","s4.note":"Note",
+  "s4.subtotal":"Subtotal","s4.delivery":"Delivery","s4.estTotal":"Est. total",
+  "s4.sumnote":"No payment needed yet — we'll call within 24 hours to confirm the exact total and arrange delivery.",
+  "s4.submit":"Place my order 🍪",
+  "s4.edit":"← Edit",
+  "conf.h":"Order received!",
+  "conf.p":"We got your order and will call within 24 hours to confirm and arrange delivery.",
+  "conf.newOrder":"Place another order 🍪",
+  "conf.whatsapp":"Message us on WhatsApp",
+  "conf.instagram":"Follow us on Instagram →",
+  "footer.tagline":"Simple ingredients, sweet moments",
+  "footer.copy":"© 2026 Sunset Cookies · Algiers, Algeria",
+  // Dynamic / JS-generated strings
+  "lbl.chocochip":"Chocolate chip",
+  "lbl.nuttyfruity":"Nutty & fruity",
+  "lbl.custom":"Custom",
+  "lbl.plainBrownButter":" (plain brown butter)",
+  "lbl.nutsColon":"nuts: ",
+  "lbl.ideaColon":"idea: \"",
+  "lbl.chefsSuggestion":"chef's suggestion",
+  "lbl.boxOf6":"Box of 6",
+  "lbl.singleCookies":"Single cookies",
+  "lbl.box":"box","lbl.boxes":"boxes",
+  "lbl.cookie":"cookie","lbl.cookies":"cookies",
+  "lbl.confirmedOnCall":"Confirmed on call",
+  "lbl.eachBox":"per box","lbl.totalCookies":"Total cookies",
+  "lbl.addArrow":"← add ","lbl.removeArrow":"← remove ","lbl.fixMixFirst":"← fix mix first",
+  "lbl.mixConfirmedOnCall":"Mix confirmed on call",
+  "lbl.eachBoxNote":"Each box = 6 freshly baked cookies",
+  "lbl.howManyBoxes":"How many boxes?",
+  "lbl.howManyCookies":"How many cookies?",
+  "lbl.sending":"Sending…",
+  "lbl.couldNotSend":"Could not send. Please message us on WhatsApp directly!"
+},
+fr: {
+  "nav.whatsapp":"WhatsApp",
+  "hero.eyebrow":"Alger · Toujours fraîchement préparés",
+  "hero.title":"Des instants<br><em>doux</em><br>commencent ici",
+  "hero.sub":"Chaque cookie part d'une base au beurre noisette —<br>des ingrédients simples, sans conservateurs, juste de l'amour.",
+  "hero.cta":"Commander",
+  "products.eyebrow":"Nos cookies",
+  "products.title":"Choisissez votre préféré",
+  "products.sub":"Chaque fournée est préparée fraîche — sans conservateurs, juste de vrais ingrédients.",
+  "products.classic.badge":"Best-seller",
+  "products.classic.name":"Pépites de chocolat",
+  "products.classic.desc":"Une base au beurre noisette, dorée et savoureuse, avec des poches de chocolat fondu à chaque bouchée. Le classique parfait — celui qui a tout commencé.",
+  "products.classic.each":"150 DA / cookie",
+  "products.classic.box":"750 DA / boîte de 6",
+  "products.classic.save":"Économisez 150 DA",
+  "products.classic.btn":"Commander",
+  "products.nuts.badge":"À mélanger",
+  "products.nuts.name":"Noix &amp; fruits secs",
+  "products.nuts.desc":"La même base au beurre noisette, garnie des noix et/ou fruits secs de votre choix — mélangés directement dans la pâte.",
+  "products.nuts.each":"200 DA / cookie",
+  "products.nuts.box":"1 000 DA / boîte de 6",
+  "products.nuts.save":"Économisez 200 DA",
+  "products.nuts.btn":"Choisir les ingrédients →",
+  "products.custom.badge":"À personnaliser",
+  "products.custom.name":"Créez le vôtre",
+  "products.custom.desc":"Même base au beurre noisette — choisissez-la nature ou aux noix, puis ajoutez les garnitures que vous aimez.",
+  "products.custom.each":"200 DA / cookie",
+  "products.custom.box":"1 000 DA / boîte de 6",
+  "products.custom.save":"Économisez 200 DA",
+  "products.custom.btn":"Personnaliser →",
+  "products.comingsoon":"Bientôt disponible",
+  "products.midnight.name":"Midnight special",
+  "products.midnight.desc":"Quelque chose de sombre et d'indulgent arrive bientôt. Restez à l'écoute.",
+  "products.midnight.label":"Bientôt 🌙",
+  "products.gift.name":"Coffrets cadeaux",
+  "products.gift.desc":"Des coffrets de cookies sélectionnés pour anniversaires et célébrations.",
+  "products.gift.label":"Bientôt 🎁",
+  "products.followPrefix":"Suivez ",
+  "products.followSuffix":" pour être informé en premier 🌅",
+  "hiw.eyebrow":"Comment ça marche",
+  "hiw.title":"Très simple",
+  "hiw.step1.title":"Choisissez votre cookie",
+  "hiw.step1.desc":"Parcourez la sélection ou créez le vôtre avec les garnitures que vous aimez.",
+  "hiw.step2.title":"Remplissez le formulaire",
+  "hiw.step2.desc":"Deux minutes, sans compte — juste votre commande et vos coordonnées.",
+  "hiw.step3.title":"On vous appelle pour confirmer",
+  "hiw.step3.desc":"Nous vous contactons dans les 24h pour confirmer et organiser la livraison.",
+  "order.eyebrow":"Passez votre commande",
+  "order.title":"C'est l'heure de la pâtisserie",
+  "s1.h":"Que souhaitez-vous ?",
+  "s1.sub":"Touchez pour sélectionner — vous pouvez en choisir plusieurs.",
+  "s1.classic.name":"Pépites de chocolat",
+  "s1.classic.desc":"Base au beurre noisette, pépites de chocolat classiques",
+  "s1.nuts.name":"Noix &amp; fruits secs",
+  "s1.nuts.desc":"Choisissez des noix et/ou fruits secs, cuits dans la pâte",
+  "s1.nutsPanel.nuts":"Noix",
+  "s1.nutsPanel.dried":"Fruits secs",
+  "s1.pickUp2":"(jusqu'à 2)",
+  "s1.custom.name":"Cookie personnalisé",
+  "s1.custom.desc":"Je choisis ma base et mes garnitures",
+  "s1.custom.base":"Base",
+  "s1.custom.pickNuts":"Choisissez vos noix",
+  "s1.maxTwo":"(max 2)",
+  "s1.custom.toppings":"Garnitures",
+  "s1.custom.gotIdea":"Vous avez une idée ?",
+  "s1.custom.suggest":"✨ Proposez votre propre combinaison — 250 DA",
+  "s1.custom.suggestPh":"Dites-nous ce qui vous tente — on fera de notre mieux pour le réaliser !",
+  "s1.custom.suggestNote":"Cette option fixe votre cookie à 250 DA / cookie · 1 250 DA / boîte de 6.",
+  "s1.err":"⚠️ Veuillez sélectionner au moins un cookie",
+  "chip.walnuts":"Noix","chip.almonds":"Amandes","chip.hazelnuts":"Noisettes","chip.peanuts":"Cacahuètes","chip.pistachios":"Pistaches",
+  "chip.raisins":"Raisins secs","chip.cranberries":"Cranberries séchées","chip.apricots":"Abricots secs","chip.figs":"Figues",
+  "chip.baseNormal":"Normale (beurre noisette)","chip.baseNutted":"Aux noix (beurre noisette + noix)",
+  "chip.cremeBueno":"Crème Bueno","chip.cremePistache":"Crème Pistache","chip.nutella":"Nutella","chip.bueno":"Bueno",
+  "chip.kitkat":"KitKat","chip.mms":"M&amp;Ms","chip.kindermaxi":"Kinder Maxi","chip.chocchunks":"Pépites de chocolat",
+  "btn.continue":"Continuer →",
+  "btn.back":"← Retour",
+  "s2.h":"À l'unité ou en boîte ?",
+  "s2.sub":"Les boîtes vous offrent un cookie gratuit.",
+  "s2.single":"À l'unité","s2.perCookie":"par cookie",
+  "s2.bestValue":"Meilleure offre","s2.box":"Boîte de 6","s2.oneFree":"un cookie offert 🎉",
+  "s2.howManyCookies":"Combien de cookies ?",
+  "s2.pickAsMany":"Choisissez-en autant que vous voulez",
+  "s2.mixTitleBox":"Votre mix de boîte",
+  "s2.mustTotal6":"(doit totaliser 6)",
+  "s2.cookiesPerBox":"Cookies par boîte",
+  "s2.estTotal":"Total estimé",
+  "s2.exactConfirmed":"Prix exact confirmé par téléphone",
+  "s2.deliveryNote":"+ frais de livraison, selon votre zone (étape suivante)",
+  "s2.noteLabel":"Note spéciale (facultatif)",
+  "s2.notePh":"Allergies, demandes spéciales, message cadeau…",
+  "s3.h":"Vos coordonnées",
+  "s3.sub":"Pour savoir comment vous contacter — et où livrer.",
+  "s3.fullName":"Nom complet","s3.fullNamePh":"Votre nom",
+  "s3.phone":"Numéro de téléphone",
+  "s3.zone":"Zone de livraison",
+  "s3.zoneSelect":"Sélectionnez votre zone…",
+  "s3.zoneOtherGroup":"Autre",
+  "s3.zoneOther":"Ailleurs à Alger",
+  "s3.zoneNote":"Pas dans la liste ? Choisissez « Ailleurs » — nous confirmerons les frais par téléphone.",
+  "s3.address":"Adresse / point de repère","s3.addressPh":"Rue, immeuble, point de repère proche…",
+  "s3.err":"⚠️ Veuillez remplir tous les champs et sélectionner votre zone",
+  "s3.errPhone":"⚠️ Veuillez entrer un numéro de téléphone algérien valide (ex : 05 XX XX XX XX)",
+  "s3.review":"Vérifier ma commande →",
+  "s4.h":"Votre commande",
+  "s4.sub":"Tout est correct ?",
+  "s4.cookie":"Cookie","s4.format":"Format","s4.quantity":"Quantité","s4.mix":"Mix",
+  "s4.name":"Nom","s4.phone":"Téléphone","s4.zone":"Zone de livraison","s4.address":"Adresse","s4.note":"Note",
+  "s4.subtotal":"Sous-total","s4.delivery":"Livraison","s4.estTotal":"Total estimé",
+  "s4.sumnote":"Aucun paiement requis pour l'instant — nous vous appellerons dans les 24h pour confirmer le total exact et organiser la livraison.",
+  "s4.submit":"Passer ma commande 🍪",
+  "s4.edit":"← Modifier",
+  "conf.h":"Commande reçue !",
+  "conf.p":"Nous avons reçu votre commande et vous appellerons dans les 24h pour confirmer et organiser la livraison.",
+  "conf.newOrder":"Passer une autre commande 🍪",
+  "conf.whatsapp":"Contactez-nous sur WhatsApp",
+  "conf.instagram":"Suivez-nous sur Instagram →",
+  "footer.tagline":"Des ingrédients simples, des instants doux",
+  "footer.copy":"© 2026 Sunset Cookies · Alger, Algérie",
+  "lbl.chocochip":"Pépites de chocolat",
+  "lbl.nuttyfruity":"Noix & fruits secs",
+  "lbl.custom":"Personnalisé",
+  "lbl.plainBrownButter":" (beurre noisette nature)",
+  "lbl.nutsColon":"noix : ",
+  "lbl.ideaColon":"idée : \"",
+  "lbl.chefsSuggestion":"suggestion du chef",
+  "lbl.boxOf6":"Boîte de 6",
+  "lbl.singleCookies":"Cookies à l'unité",
+  "lbl.box":"boîte","lbl.boxes":"boîtes",
+  "lbl.cookie":"cookie","lbl.cookies":"cookies",
+  "lbl.confirmedOnCall":"Confirmé par téléphone",
+  "lbl.eachBox":"par boîte","lbl.totalCookies":"Total des cookies",
+  "lbl.addArrow":"← ajouter ","lbl.removeArrow":"← retirer ","lbl.fixMixFirst":"← corrigez le mix",
+  "lbl.mixConfirmedOnCall":"Mix confirmé par téléphone",
+  "lbl.eachBoxNote":"Chaque boîte = 6 cookies frais",
+  "lbl.howManyBoxes":"Combien de boîtes ?",
+  "lbl.howManyCookies":"Combien de cookies ?",
+  "lbl.sending":"Envoi…",
+  "lbl.couldNotSend":"Envoi impossible. Merci de nous contacter directement sur WhatsApp !"
+},
+ar: {
+  "nav.whatsapp":"واتساب",
+  "hero.eyebrow":"الجزائر العاصمة · طازجة دائماً",
+  "hero.title":"لحظات<br><em>حلوة</em><br>تبدأ من هنا",
+  "hero.sub":"كل كوكي يبدأ بقاعدة من الزبدة المحمّرة —<br>مكونات بسيطة، بدون مواد حافظة، فقط حب.",
+  "hero.cta":"اطلب الآن",
+  "products.eyebrow":"كوكيزنا",
+  "products.title":"اختر المفضل لديك",
+  "products.sub":"كل دفعة تُخبز طازجة — بدون مواد حافظة، فقط مكونات حقيقية.",
+  "products.classic.badge":"الأكثر طلباً",
+  "products.classic.name":"كوكيز الشوكولاتة",
+  "products.classic.desc":"قاعدة من الزبدة المحمّرة، ذهبية ولذيذة، مع قطع من الشوكولاتة المذابة في كل قضمة. الكلاسيكي المثالي — الذي بدأ كل شيء.",
+  "products.classic.each":"150 دج / كوكي",
+  "products.classic.box":"750 دج / علبة من 6",
+  "products.classic.save":"وفّر 150 دج",
+  "products.classic.btn":"اطلب هذا",
+  "products.nuts.badge":"اختر الإضافات",
+  "products.nuts.name":"المكسرات والفواكه المجففة",
+  "products.nuts.desc":"نفس قاعدة الزبدة المحمّرة، مليئة بالمكسرات و/أو الفواكه المجففة التي تختارها — مدمجة في العجين.",
+  "products.nuts.each":"200 دج / كوكي",
+  "products.nuts.box":"1000 دج / علبة من 6",
+  "products.nuts.save":"وفّر 200 دج",
+  "products.nuts.btn":"اختر الإضافات ←",
+  "products.custom.badge":"صمم بنفسك",
+  "products.custom.name":"صمم كوكيك الخاص",
+  "products.custom.desc":"نفس قاعدة الزبدة المحمّرة — اختر عادية أو بالمكسرات، ثم أضف الإضافات التي تحبها.",
+  "products.custom.each":"200 دج / كوكي",
+  "products.custom.box":"1000 دج / علبة من 6",
+  "products.custom.save":"وفّر 200 دج",
+  "products.custom.btn":"تخصيص ←",
+  "products.comingsoon":"قريباً",
+  "products.midnight.name":"النسخة الليلية",
+  "products.midnight.desc":"شيء غامق ولذيذ قيد التحضير. تابعونا.",
+  "products.midnight.label":"قريباً 🌙",
+  "products.gift.name":"علب الهدايا",
+  "products.gift.desc":"علب كوكيز مختارة بعناية لأعياد الميلاد والاحتفالات.",
+  "products.gift.label":"قريباً 🎁",
+  "products.followPrefix":"تابعنا على ",
+  "products.followSuffix":" لتكون أول من يعلم 🌅",
+  "hiw.eyebrow":"كيف تعمل",
+  "hiw.title":"بكل بساطة",
+  "hiw.step1.title":"اختر كوكيك",
+  "hiw.step1.desc":"تصفح القائمة أو صمم كوكيك الخاص بالإضافات التي تحبها.",
+  "hiw.step2.title":"املأ النموذج",
+  "hiw.step2.desc":"دقيقتان فقط، بدون حساب — فقط طلبك وكيفية التواصل معك.",
+  "hiw.step3.title":"نتصل بك للتأكيد",
+  "hiw.step3.desc":"نتواصل معك خلال 24 ساعة للتأكيد وتنظيم التوصيل إلى باب منزلك.",
+  "order.eyebrow":"أكمل طلبك",
+  "order.title":"لنبدأ الخبز",
+  "s1.h":"ماذا تريد؟",
+  "s1.sub":"اضغط للاختيار — يمكنك اختيار أكثر من نوع.",
+  "s1.classic.name":"كوكيز الشوكولاتة",
+  "s1.classic.desc":"قاعدة من الزبدة المحمّرة، شوكولاتة كلاسيكية",
+  "s1.nuts.name":"المكسرات والفواكه المجففة",
+  "s1.nuts.desc":"اختر المكسرات و/أو الفواكه المجففة المخبوزة في العجين",
+  "s1.nutsPanel.nuts":"المكسرات",
+  "s1.nutsPanel.dried":"الفواكه المجففة",
+  "s1.pickUp2":"(اختر حتى 2)",
+  "s1.custom.name":"كوكي مخصص",
+  "s1.custom.desc":"سأختار القاعدة والإضافات",
+  "s1.custom.base":"القاعدة",
+  "s1.custom.pickNuts":"اختر المكسرات",
+  "s1.maxTwo":"(حد أقصى 2)",
+  "s1.custom.toppings":"الإضافات",
+  "s1.custom.gotIdea":"عندك فكرة خاصة؟",
+  "s1.custom.suggest":"✨ اقترح مزيجك الخاص — 250 دج",
+  "s1.custom.suggestPh":"أخبرنا بما تشتهيه — سنبذل قصارى جهدنا لتحضيره!",
+  "s1.custom.suggestNote":"اختيار هذا يحدد سعر كوكيك بـ 250 دج / كوكي · 1250 دج / علبة من 6.",
+  "s1.err":"⚠️ يرجى اختيار كوكي واحد على الأقل",
+  "chip.walnuts":"جوز","chip.almonds":"لوز","chip.hazelnuts":"بندق","chip.peanuts":"فول سوداني","chip.pistachios":"فستق",
+  "chip.raisins":"زبيب","chip.cranberries":"توت بري مجفف","chip.apricots":"مشمش مجفف","chip.figs":"تين",
+  "chip.baseNormal":"عادية (زبدة محمّرة)","chip.baseNutted":"بالمكسرات (زبدة محمّرة + مكسرات)",
+  "chip.cremeBueno":"كريمة بوينو","chip.cremePistache":"كريمة فستق","chip.nutella":"نوتيلا","chip.bueno":"بوينو",
+  "chip.kitkat":"كيت كات","chip.mms":"إم آند إمز","chip.kindermaxi":"كيندر ماكسي","chip.chocchunks":"قطع شوكولاتة",
+  "btn.continue":"التالي ←",
+  "btn.back":"→ رجوع",
+  "s2.h":"قطعة مفردة أم علبة؟",
+  "s2.sub":"العلب تمنحك كوكي مجاني.",
+  "s2.single":"مفرد","s2.perCookie":"للكوكي الواحد",
+  "s2.bestValue":"الأفضل قيمة","s2.box":"علبة من 6","s2.oneFree":"كوكي مجاني 🎉",
+  "s2.howManyCookies":"كم عدد الكوكيز؟",
+  "s2.pickAsMany":"اختر العدد الذي تريده",
+  "s2.mixTitleBox":"تشكيلة علبتك",
+  "s2.mustTotal6":"(يجب أن يكون المجموع 6)",
+  "s2.cookiesPerBox":"كوكيز في العلبة",
+  "s2.estTotal":"التقدير الإجمالي",
+  "s2.exactConfirmed":"السعر النهائي يُؤكد عبر الهاتف",
+  "s2.deliveryNote":"+ رسوم التوصيل، حسب منطقتك (الخطوة التالية)",
+  "s2.noteLabel":"ملاحظة خاصة (اختياري)",
+  "s2.notePh":"حساسية، طلبات خاصة، رسالة هدية…",
+  "s3.h":"بياناتك",
+  "s3.sub":"لنعرف كيف نتواصل معك — وأين نوصّل الطلب.",
+  "s3.fullName":"الاسم الكامل","s3.fullNamePh":"اسمك",
+  "s3.phone":"رقم الهاتف",
+  "s3.zone":"منطقة التوصيل",
+  "s3.zoneSelect":"اختر منطقتك…",
+  "s3.zoneOtherGroup":"أخرى",
+  "s3.zoneOther":"مكان آخر في الجزائر العاصمة",
+  "s3.zoneNote":"منطقتك غير موجودة؟ اختر «مكان آخر» — سنؤكد رسوم التوصيل عبر الهاتف.",
+  "s3.address":"العنوان / علامة بارزة","s3.addressPh":"الشارع، العمارة، أقرب علامة بارزة…",
+  "s3.err":"⚠️ يرجى تعبئة جميع الحقول واختيار منطقتك",
+  "s3.errPhone":"⚠️ يرجى إدخال رقم هاتف جزائري صحيح (مثال: 05 XX XX XX XX)",
+  "s3.review":"مراجعة طلبي ←",
+  "s4.h":"طلبك",
+  "s4.sub":"هل كل شيء صحيح؟",
+  "s4.cookie":"الكوكي","s4.format":"الشكل","s4.quantity":"الكمية","s4.mix":"التشكيلة",
+  "s4.name":"الاسم","s4.phone":"الهاتف","s4.zone":"منطقة التوصيل","s4.address":"العنوان","s4.note":"ملاحظة",
+  "s4.subtotal":"المجموع الفرعي","s4.delivery":"التوصيل","s4.estTotal":"التقدير الإجمالي",
+  "s4.sumnote":"لا حاجة للدفع الآن — سنتصل بك خلال 24 ساعة لتأكيد المبلغ النهائي وتنظيم التوصيل.",
+  "s4.submit":"تأكيد الطلب 🍪",
+  "s4.edit":"→ تعديل",
+  "conf.h":"تم استلام طلبك!",
+  "conf.p":"استلمنا طلبك وسنتصل بك خلال 24 ساعة للتأكيد وتنظيم التوصيل.",
+  "conf.newOrder":"اطلب مرة أخرى 🍪",
+  "conf.whatsapp":"راسلنا على واتساب",
+  "conf.instagram":"تابعنا على إنستغرام ←",
+  "footer.tagline":"مكونات بسيطة، لحظات حلوة",
+  "footer.copy":"© 2026 Sunset Cookies · الجزائر العاصمة، الجزائر",
+  "lbl.chocochip":"كوكيز الشوكولاتة",
+  "lbl.nuttyfruity":"المكسرات والفواكه المجففة",
+  "lbl.custom":"مخصص",
+  "lbl.plainBrownButter":" (زبدة محمّرة عادية)",
+  "lbl.nutsColon":"مكسرات: ",
+  "lbl.ideaColon":"فكرة: \"",
+  "lbl.chefsSuggestion":"اقتراح الشيف",
+  "lbl.boxOf6":"علبة من 6",
+  "lbl.singleCookies":"كوكيز مفردة",
+  "lbl.box":"علبة","lbl.boxes":"علب",
+  "lbl.cookie":"كوكي","lbl.cookies":"كوكيز",
+  "lbl.confirmedOnCall":"يُؤكد عبر الهاتف",
+  "lbl.eachBox":"لكل علبة","lbl.totalCookies":"إجمالي الكوكيز",
+  "lbl.addArrow":"← أضف ","lbl.removeArrow":"← أزل ","lbl.fixMixFirst":"← صحّح التشكيلة أولاً",
+  "lbl.mixConfirmedOnCall":"التشكيلة تُؤكد عبر الهاتف",
+  "lbl.eachBoxNote":"كل علبة = 6 كوكيز طازجة",
+  "lbl.howManyBoxes":"كم عدد العلب؟",
+  "lbl.howManyCookies":"كم عدد الكوكيز؟",
+  "lbl.sending":"جارٍ الإرسال…",
+  "lbl.couldNotSend":"تعذر الإرسال. يرجى التواصل معنا مباشرة عبر واتساب!"
+}
+};
+
+var currentLang = 'en';
+function t(key){
+  var d = I18N[currentLang] || I18N.en;
+  return (d[key] !== undefined) ? d[key] : (I18N.en[key] !== undefined ? I18N.en[key] : key);
+}
+
+function applyLang(lang){
+  currentLang = lang;
+  try { localStorage.setItem('sc_lang', lang); } catch(e){}
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+  // Static elements
+  var els = document.querySelectorAll('[data-i18n]');
+  for (var i = 0; i < els.length; i++) {
+    var key = els[i].getAttribute('data-i18n');
+    var val = t(key);
+    els[i].innerHTML = val;
+  }
+  // Placeholders
+  var phEls = document.querySelectorAll('[data-i18n-placeholder]');
+  for (var i = 0; i < phEls.length; i++) {
+    var key = phEls[i].getAttribute('data-i18n-placeholder');
+    phEls[i].setAttribute('placeholder', t(key));
+  }
+  // optgroup labels
+  var grpEls = document.querySelectorAll('[data-i18n-label]');
+  for (var i = 0; i < grpEls.length; i++) {
+    var key = grpEls[i].getAttribute('data-i18n-label');
+    grpEls[i].setAttribute('label', t(key));
+  }
+
+  // Lang button display
+  var flags = { en:'🇬🇧', fr:'🇫🇷', ar:'🇩🇿' };
+  var labels = { en:'EN', fr:'FR', ar:'AR' };
+  document.getElementById('langFlag').textContent = flags[lang];
+  document.getElementById('langLabel').textContent = labels[lang];
+
+  // Active state in menu
+  var opts = document.querySelectorAll('.langopt');
+  for (var i = 0; i < opts.length; i++) {
+    opts[i].classList.toggle('active', opts[i].getAttribute('data-lang') === lang);
+  }
+
+  // Refresh dynamic content that depends on language (if app already initialized)
+  if (typeof refreshDynamicText === 'function') refreshDynamicText();
+}
+
+function refreshDynamicText() {
+  // Refresh all dynamic JS-rendered text that doesn't use data-i18n
+  try { updateQtyUI(); } catch(e){}
+  try { updateMixFoot(); } catch(e){}
+  try { updatePriceCards(); } catch(e){}
+  try { renderMix(); } catch(e){}
+  // Re-apply LABELS map
+  LABELS = { classic: t('lbl.chocochip'), nuts: t('lbl.nuttyfruity'), custom: t('lbl.custom') };
+  // Update submit button text if not disabled
+  var btn = document.getElementById('submit-btn');
+  if (btn && !btn.disabled) btn.textContent = t('s4.submit');
+}
+
+// Set up language switcher UI
+document.getElementById('langBtn').addEventListener('click', function(){
+  document.getElementById('langMenu').classList.toggle('open');
+});
+document.addEventListener('click', function(e){
+  var menu = document.getElementById('langMenu');
+  var btn = document.getElementById('langBtn');
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+var langOpts = document.querySelectorAll('.langopt');
+for (var i = 0; i < langOpts.length; i++) {
+  (function(opt){
+    opt.addEventListener('click', function(){
+      applyLang(opt.getAttribute('data-lang'));
+      document.getElementById('langMenu').classList.remove('open');
+    });
+  })(langOpts[i]);
+}
+
+
+var products      = [];
+var customBase    = 'normal';
+var customNuts    = [];      // chosen nuts when custom base = "Nutted"
+var customTops    = ['Crème Bueno'];
+var hasSuggestion = false;
+var suggestionText = '';
+var specialMix    = [];      // chosen nuts / dried fruit for the "nuts" (Nutty & fruity) cookie
+var format        = 'single'; // 'single' | 'box'
+var qty           = 1;        // # of single cookies OR # of boxes
+var typeAlloc     = {};       // per-type qty: per-box alloc (box) or total (single)
+var deliveryFee   = null;     // DA, or null until chosen; 0 = "confirm on call"
+var deliveryZone  = '';
+var orderRef      = '';       // e.g. "#4821", generated at submit time
+
+// ── PRICING ──────────────────────────────────────────
+// std = classic chocolate chip
+// spc = Nutty & fruity, and Custom without a suggestion box
+// sug = Custom with a "suggest your own combo" idea
+var P = { std: { single:150, box:750,  was:900,  save:150 },
+          spc: { single:200, box:1000, was:1200, save:200 },
+          sug: { single:250, box:1250, was:1500, save:250 } };
+
+var TIER_ORDER = { std:0, spc:1, sug:2 };
+
+// Per-product tier
+function productTier(p){
+  if (p === 'custom') return hasSuggestion ? 'sug' : 'spc';
+  if (p === 'nuts')   return 'spc';
+  return 'std';
+}
+
+// Highest tier among selected products — used to price a mixed box
+function tier(){
+  var best = 'std';
+  products.forEach(function(p){
+    var t = productTier(p);
+    if (TIER_ORDER[t] > TIER_ORDER[best]) best = t;
+  });
+  return best;
+}
+
+function calcEst(){
+  if (!products.length) return 0;
+  if (format === 'box'){
+    return qty * P[tier()].box;
+  } else {
+    // per-type pricing for singles
+    return products.reduce(function(sum, p){
+      return sum + (typeAlloc[p]||1) * P[productTier(p)].single;
+    }, 0);
+  }
+}
+
+// ── DELIVERY ─────────────────────────────────────────
+function calcDelivery(){
+  return deliveryFee || 0;
+}
+
+function fmtDA(n){ return n.toLocaleString('fr-DZ') + ' DA'; }
+
+// ── FORMAT PICKER ─────────────────────────────────────
+function setFormat(f){
+  format = f;
+  document.getElementById('fmt-single').classList.toggle('sel', f==='single');
+  document.getElementById('fmt-box').classList.toggle('sel',    f==='box');
+  initAlloc();
+  renderMix();
+  updateQtyUI();
+  updatePriceCards();
+  updateEstimate();
+}
+
+// Update the price shown on the format cards based on selected types
+function updatePriceCards(){
+  var tr = tier();
+  // Single card
+  document.getElementById('fp-single-price').textContent = fmtDA(P[tr].single);
+  // Box card
+  document.getElementById('fp-box-was').textContent   = fmtDA(P[tr].was);
+  document.getElementById('fp-box-price').textContent  = fmtDA(P[tr].box);
+  var saveStr = tr === 'std' ? t('products.classic.save') : tr === 'sug' ? 'Save 250 DA' : t('products.classic.save').replace('150','200');
+  document.getElementById('fp-box-free').textContent   = t('s2.oneFree');
+}
+
+// ── ALLOCATION ───────────────────────────────────────
+function initAlloc(){
+  typeAlloc = {};
+  if (format === 'box'){
+    // Distribute 6 evenly across selected types (per box)
+    var per = Math.floor(6 / (products.length || 1));
+    var rem = 6 % (products.length || 1);
+    products.forEach(function(p, i){
+      typeAlloc[p] = per + (i === 0 ? rem : 0);
+    });
+  } else {
+    products.forEach(function(p){ typeAlloc[p] = 1; });
+    qty = products.length || 1;
+  }
+}
+
+// ── MIX ALLOCATOR ────────────────────────────────────
+var LABELS = { classic:'Chocolate chip', nuts:'Nutty & fruity', custom:'Custom' };
+var EMOJIS = { classic:'🍪', nuts:'🥜', custom:'🎨' };
+
+function renderMix(){
+  var alloc = document.getElementById('mix-alloc');
+  if (products.length < 2){ alloc.classList.remove('show'); return; }
+  alloc.classList.add('show');
+
+  // Update title
+  var titleNote = format === 'box'
+    ? t('s2.mustTotal6')
+    : '(how many of each?)';
+  document.getElementById('mix-title').innerHTML =
+    t('s2.mixTitleBox') + ' <span style="font-weight:300;text-transform:none;letter-spacing:0">' + titleNote + '</span>';
+
+  var rows = document.getElementById('mix-rows');
+  rows.innerHTML = '';
+  products.forEach(function(p){
+    var row = document.createElement('div');
+    row.className = 'mix-row';
+    var lbl = p === 'classic' ? t('lbl.chocochip') : p === 'nuts' ? t('lbl.nuttyfruity') : t('lbl.custom');
+    row.innerHTML =
+      '<span class="mix-em">' + EMOJIS[p] + '</span>' +
+      '<span class="mix-nm">' + lbl + '</span>' +
+      '<div class="mix-ctrl">' +
+        '<button class="mix-btn" onclick="adjMix(\'' + p + '\',-1)">−</button>' +
+        '<span class="mix-v" id="mv-' + p + '">' + (typeAlloc[p]||0) + '</span>' +
+        '<button class="mix-btn" onclick="adjMix(\'' + p + '\',1)">+</button>' +
+      '</div>';
+    rows.appendChild(row);
+  });
+  updateMixFoot();
+}
+
+function adjMix(type, d){
+  typeAlloc[type] = Math.max(0, (typeAlloc[type]||0) + d);
+  var el = document.getElementById('mv-' + type);
+  if (el) el.textContent = typeAlloc[type];
+
+  if (format === 'single'){
+    // total singles = sum of all allocs
+    qty = mixTotal();
+    if (qty < 1) { typeAlloc[type] = 1; el.textContent = 1; qty = mixTotal(); }
+  }
+  updateMixFoot();
+  updateQtyUI();
+  updateEstimate();
+}
+
+function mixTotal(){
+  return products.reduce(function(s,p){ return s + (typeAlloc[p]||0); }, 0);
+}
+
+// A box's mix always totals 6 (per box), regardless of how many boxes (qty) are ordered.
+function updateMixFoot(){
+  var total = mixTotal();
+  var tvEl = document.getElementById('mix-tv');
+  var stEl = document.getElementById('mix-status');
+  var tlEl = document.getElementById('mix-tl');
+
+  if (format === 'box'){
+    tvEl.textContent = total + ' / 6';
+    tlEl.textContent = t('s2.cookiesPerBox');
+    if (total === 6){
+      stEl.textContent = '✓'; stEl.className = 'mix-ok';
+    } else {
+      var diff = 6 - total;
+      stEl.textContent = diff > 0 ? t('lbl.addArrow') + diff : t('lbl.removeArrow') + (-diff);
+      stEl.className = 'mix-warn';
+    }
+  } else {
+    tvEl.textContent = total;
+    tlEl.textContent = t('lbl.totalCookies');
+    stEl.textContent = ''; stEl.className = '';
+  }
+}
+
+// ── QUANTITY UI ──────────────────────────────────────
+function updateQtyUI(){
+  var el  = document.getElementById('qval');
+  var lbl = document.getElementById('qlbl');
+  var note= document.getElementById('qnote');
+  var qLabelEl = document.getElementById('qty-label');
+
+  if (format === 'box'){
+    el.textContent = qty;
+    lbl.textContent = qty + ' ' + (qty>1 ? t('lbl.boxes') : t('lbl.box')) + ' · ' + (qty*6) + ' ' + t('lbl.cookies');
+    note.textContent = t('lbl.eachBoxNote');
+    qLabelEl.textContent = t('lbl.howManyBoxes');
+  } else {
+    var total = products.length > 1 ? mixTotal() : qty;
+    el.textContent = products.length > 1 ? '—' : qty;
+    lbl.textContent = total + ' ' + (total>1 ? t('lbl.cookies') : t('lbl.cookie'));
+    note.textContent = t('lbl.mixConfirmedOnCall');
+    qLabelEl.textContent = t('lbl.howManyCookies');
+  }
+  updateEstimate();
+}
+
+function updateEstimate(){
+  var est = calcEst();
+  var amEl = document.getElementById('est-amount');
+  var subEl= document.getElementById('est-sub');
+  if (amEl) amEl.textContent = est ? fmtDA(est) : '—';
+  if (subEl){
+    if (format === 'box'){
+      subEl.textContent = qty + ' ' + (qty>1 ? t('lbl.boxes') : t('lbl.box')) + ' · ' + (qty*6) + ' ' + t('lbl.cookies');
+    } else {
+      var tot = products.length>1 ? mixTotal() : qty;
+      subEl.textContent = tot + ' ' + (tot>1 ? t('lbl.cookies') : t('lbl.cookie'));
+    }
+  }
+}
+
+// ── SCROLL REVEAL ──
+(function() {
+  var els = document.querySelectorAll('.rv');
+  if (!('IntersectionObserver' in window)) {
+    for (var i = 0; i < els.length; i++) els[i].classList.add('on');
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  for (var i = 0; i < els.length; i++) obs.observe(els[i]);
+})();
+
+// ── CHIP LOGIC ──
+var allChips = document.querySelectorAll('.chip');
+for (var i = 0; i < allChips.length; i++) {
+  (function(chip) {
+    chip.addEventListener('click', function() {
+      var g = chip.getAttribute('data-g');
+      if (g === 'base') {
+        var siblings = chip.parentNode.querySelectorAll('.chip');
+        for (var j = 0; j < siblings.length; j++) siblings[j].classList.remove('sel');
+        chip.classList.add('sel');
+        // Show/hide the "pick your nuts" sub-picker for a Nutted base
+        var panel = chip.closest('#fcust');
+        if (panel) {
+          var nutWrap = panel.querySelector('.custnut-wrap');
+          if (nutWrap) {
+            var isNutted = chip.getAttribute('data-value') === 'nutted';
+            nutWrap.classList.toggle('show', isNutted);
+          }
+        }
+      } else if (g === 'sugg') {
+        chip.classList.toggle('sel');
+        var wrap = chip.nextElementSibling;
+        if (wrap && wrap.classList.contains('sugg-wrap')) {
+          wrap.classList.toggle('open', chip.classList.contains('sel'));
+        }
+      } else if (g === 'top' || g === 'custnut' || g === 'nut' || g === 'dry') {
+        // Max 2 picks for toppings, custom nut-base, and nutty/fruity mix-ins
+        var group = chip.parentNode.querySelectorAll('.chip[data-g="' + g + '"].sel');
+        if (!chip.classList.contains('sel') && group.length >= 2) return;
+        chip.classList.toggle('sel');
+      } else {
+        chip.classList.toggle('sel');
+      }
+    });
+  })(allChips[i]);
+}
+
+// ── PRODUCT SECTION BUTTONS ──
+// All customizing now happens in one place (the order form, step 1) —
+// these buttons just jump there with the right product pre-selected and
+// its panel already open, so there's no double effort for the customer.
+document.getElementById('btn-classic').addEventListener('click', function() { quickOrder('classic'); });
+
+document.getElementById('btn-open-special').addEventListener('click', function() {
+  quickOrder('nuts');
+  document.getElementById('fspecial').classList.add('open');
+});
+
+document.getElementById('btn-open-cust').addEventListener('click', function() {
+  quickOrder('custom');
+  document.getElementById('fcust').classList.add('open');
+});
+
+function quickOrder(type) {
+  if (products.indexOf(type) === -1) products.push(type);
+  document.getElementById('fc-' + type).classList.add('sel');
+  initAlloc();
+  renderMix();
+  updatePriceCards();
+  updateQtyUI();
+  scrollToEl(document.getElementById('order'));
+}
+
+// ── FORM CARDS ──
+var formCards = document.querySelectorAll('.sc[data-type]');
+for (var i = 0; i < formCards.length; i++) {
+  (function(card) {
+    card.addEventListener('click', function() {
+      var type = card.getAttribute('data-type');
+      if (card.classList.contains('sel')) {
+        card.classList.remove('sel');
+        var idx = products.indexOf(type);
+        if (idx > -1) products.splice(idx, 1);
+      } else {
+        card.classList.add('sel');
+        if (products.indexOf(type) === -1) products.push(type);
+      }
+      var fcust = document.getElementById('fcust');
+      if (products.indexOf('custom') > -1) fcust.classList.add('open');
+      else fcust.classList.remove('open');
+      var fspecial = document.getElementById('fspecial');
+      if (products.indexOf('nuts') > -1) fspecial.classList.add('open');
+      else fspecial.classList.remove('open');
+      // Refresh pricing & mix whenever selection changes
+      initAlloc();
+      renderMix();
+      updatePriceCards();
+      updateQtyUI();
+      updateEstimate();
+    });
+  })(formCards[i]);
+}
+
+// ── QTY ──
+document.getElementById('qminus').addEventListener('click', function() {
+  if (products.length > 1 && format === 'single') return; // controlled by mix
+  if (qty > 1) qty--;
+  updateQtyUI();
+});
+document.getElementById('qplus').addEventListener('click', function() {
+  if (products.length > 1 && format === 'single') return; // controlled by mix
+  if (qty < 30) qty++;
+  updateQtyUI();
+});
+
+// ── INIT ──
+setFormat('single'); // default to single, run price setup
+
+// ── NAVIGATION ──
+document.getElementById('to-s2').addEventListener('click', function() {
+  if (products.length === 0) { showErr('err1'); return; }
+  hideErr('err1');
+  initAlloc(); renderMix(); updatePriceCards(); updateQtyUI();
+  goStep(2);
+});
+document.getElementById('to-s3').addEventListener('click', function() {
+  // Validate box mix if applicable
+  if (format === 'box' && products.length > 1 && mixTotal() !== 6) {
+    var st = document.getElementById('mix-status');
+    if (st) { st.textContent = t('lbl.fixMixFirst'); st.className = 'mix-warn'; }
+    document.getElementById('mix-alloc').scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+  goStep(3);
+});
+document.getElementById('to-s4').addEventListener('click', function() {
+  var nm = document.getElementById('f-name').value.trim();
+  var ph = document.getElementById('f-phone').value.trim();
+  var lc = document.getElementById('f-loc').value.trim();
+  var zoneSel = document.getElementById('f-zone');
+  var zv = zoneSel.value;
+  if (!nm || !ph || !lc || !zv) {
+    if (!nm) document.getElementById('f-name').classList.add('err');
+    if (!ph) document.getElementById('f-phone').classList.add('err');
+    if (!lc) document.getElementById('f-loc').classList.add('err');
+    if (!zv) zoneSel.classList.add('err');
+    showErr('err3'); return;
+  }
+  // Phone validation: Algerian numbers — 0[5|6|7] followed by 8 digits,
+  // optionally prefixed with +213 or 00213, spaces/dashes allowed
+  var phoneDigits = ph.replace(/[\s\-\.]/g, '');
+  var phoneOk = /^(\+213|00213)?0[5-7]\d{8}$/.test(phoneDigits);
+  if (!phoneOk) {
+    document.getElementById('f-phone').classList.add('err');
+    showErr('err-phone'); return;
+  }
+  hideErr('err-phone');
+  hideErr('err3');
+  if (products.indexOf('custom') > -1) collectCustom('fcust');
+  if (products.indexOf('nuts') > -1) collectSpecial('fspecial');
+  fillSummary(nm, ph, lc); goStep(4);
+});
+
+// ── DELIVERY ZONE ──
+document.getElementById('f-zone').addEventListener('change', function() {
+  this.classList.remove('err');
+  hideErr('err3');
+  var v = this.value;
+  var label = this.options[this.selectedIndex] ? this.options[this.selectedIndex].text : '';
+  deliveryZone = label;
+  if (v === '' ) { deliveryFee = null; }
+  else if (v === 'other') { deliveryFee = 0; }
+  else { deliveryFee = parseInt(v, 10); }
+  updateEstimate();
+});
+document.getElementById('back1').addEventListener('click', function() { goStep(1); });
+document.getElementById('back2').addEventListener('click', function() { goStep(2); });
+document.getElementById('back3').addEventListener('click', function() { goStep(3); });
+document.getElementById('submit-btn').addEventListener('click', submitOrder);
+
+var inputs = document.querySelectorAll('.fg input, .fg select');
+for (var i = 0; i < inputs.length; i++) {
+  inputs[i].addEventListener('input', function() {
+    this.classList.remove('err');
+    hideErr('err3');
+    if (this.id === 'f-phone') hideErr('err-phone');
+  });
+}
+
+function goStep(n) {
+  var steps = document.querySelectorAll('.fstep');
+  for (var i = 0; i < steps.length; i++) steps[i].classList.remove('act');
+  (document.getElementById('s' + n) || document.getElementById('s-conf')).classList.add('act');
+  updateDots(n);
+  try { scrollToEl(document.getElementById('order')); } catch(e) {}
+}
+function updateDots(n) {
+  for (var i = 1; i <= 4; i++) {
+    var d = document.getElementById('d' + i); if (!d) continue;
+    d.className = 'dot';
+    if (i < n) d.classList.add('done');
+    else if (i === n) d.classList.add('act');
+  }
+}
+function showErr(id) { var e = document.getElementById(id); if (e) e.classList.add('show'); }
+function hideErr(id) { var e = document.getElementById(id); if (e) e.classList.remove('show'); }
+
+// ── SUMMARY ──
+function collectCustom(cid) {
+  var base = document.querySelector('#' + cid + ' .chip.sel[data-g="base"]');
+  if (base) customBase = base.getAttribute('data-value') || 'normal';
+
+  var nutEls = document.querySelectorAll('#' + cid + ' .chip.sel[data-g="custnut"]');
+  customNuts = [];
+  for (var i = 0; i < nutEls.length; i++) customNuts.push(nutEls[i].textContent.trim());
+
+  var topEls = document.querySelectorAll('#' + cid + ' .chip.sel[data-g="top"]');
+  customTops = [];
+  for (var i = 0; i < topEls.length; i++) customTops.push(topEls[i].textContent.trim());
+
+  var suggToggle = document.querySelector('#' + cid + ' .chip[data-g="sugg"]');
+  var suggTa     = document.querySelector('#' + cid + ' .sugg-text');
+  suggestionText = suggTa ? suggTa.value.trim() : '';
+  hasSuggestion = (suggToggle && suggToggle.classList.contains('sel')) || !!suggestionText;
+}
+
+function collectSpecial(cid) {
+  var nutEls = document.querySelectorAll('#' + cid + ' .chip.sel[data-g="nut"]');
+  var dryEls = document.querySelectorAll('#' + cid + ' .chip.sel[data-g="dry"]');
+  specialMix = [];
+  for (var i = 0; i < nutEls.length; i++) specialMix.push(nutEls[i].textContent.trim());
+  for (var i = 0; i < dryEls.length; i++) specialMix.push(dryEls[i].textContent.trim());
+}
+
+function pLabel(tp) {
+  if (tp === 'classic') return t('lbl.chocochip');
+  if (tp === 'nuts') {
+    return t('lbl.nuttyfruity') + (specialMix.length ? ' (' + specialMix.join(', ') + ')' : t('lbl.plainBrownButter'));
+  }
+  if (tp === 'custom') {
+    var baseLabel = customBase === 'nutted' ? t('chip.baseNutted') : t('chip.baseNormal');
+    var bits = [baseLabel];
+    if (customBase === 'nutted' && customNuts.length) bits.push(t('lbl.nutsColon') + customNuts.join(', '));
+    if (customTops.length) bits.push(customTops.join(', '));
+    if (hasSuggestion && suggestionText) bits.push(t('lbl.ideaColon') + suggestionText + '"');
+    else if (hasSuggestion) bits.push(t('lbl.chefsSuggestion'));
+    return t('lbl.custom') + ' (' + bits.join('; ') + ')';
+  }
+  return tp;
+}
+
+function fillSummary(nm, ph, lc) {
+  document.getElementById('su-c').textContent = products.map(pLabel).join(' + ') || '—';
+
+  // Format label
+  var fmtTxt = format === 'box' ? t('lbl.boxOf6') : t('lbl.singleCookies');
+  document.getElementById('su-fmt').textContent = fmtTxt;
+
+  // Quantity label
+  if (format === 'box') {
+    document.getElementById('su-q').textContent = qty + ' ' + (qty>1 ? t('lbl.boxes') : t('lbl.box')) + ' (' + (qty*6) + ' ' + t('lbl.cookies') + ')';
+  } else {
+    var tot = products.length > 1 ? mixTotal() : qty;
+    document.getElementById('su-q').textContent = tot + ' ' + (tot>1 ? t('lbl.cookies') : t('lbl.cookie'));
+  }
+
+  // Mix row
+  var mixRow = document.getElementById('su-mix-row');
+  if (products.length > 1) {
+    var mixParts = products.map(function(p){ return (typeAlloc[p]||0) + ' × ' + EMOJIS[p]; });
+    document.getElementById('su-mix').textContent = mixParts.join('  ');
+    mixRow.style.display = 'flex';
+  } else {
+    mixRow.style.display = 'none';
+  }
+
+  document.getElementById('su-n').textContent = nm;
+  document.getElementById('su-p').textContent = ph;
+  document.getElementById('su-l').textContent = lc;
+
+  // Delivery area + fee
+  document.getElementById('su-zone').textContent = deliveryZone || '—';
+  document.getElementById('su-deliv').textContent =
+    (deliveryFee === 0 && deliveryZone) ? t('lbl.confirmedOnCall') : fmtDA(calcDelivery());
+
+  var note = document.getElementById('f-note').value.trim();
+  var nr = document.getElementById('su-nr');
+  if (note) { document.getElementById('su-note').textContent = note; nr.style.display = 'flex'; }
+  else nr.style.display = 'none';
+
+  // Subtotal + total
+  var sub = calcEst();
+  document.getElementById('su-sub').textContent = fmtDA(sub);
+  document.getElementById('su-price').textContent = '≈ ' + fmtDA(sub + calcDelivery());
+}
+
+// ── SUBMIT ──
+// ════════════════════════════════════════════════
+// GOOGLE SHEETS SETUP:
+// 1. Open your Google Sheet → Extensions → Apps Script
+// 2. Paste the following function and save:
+//
+//    function doPost(e) {
+//      var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Feuille 1');
+//      var data  = JSON.parse(e.postData.contents);
+//      sheet.appendRow([
+//        data.timestamp,
+//        data.ref,
+//        data.name,
+//        data.phone,
+//        data.location,
+//        data.delivery_zone,
+//        data.delivery_fee,
+//        data.product,
+//        data.format,
+//        data.mix,
+//        data.subtotal,
+//        data.est_total,
+//        data.note
+//      ]);
+//      return ContentService
+//        .createTextOutput('OK')
+//        .setMimeType(ContentService.MimeType.TEXT);
+//    }
+//
+// 3. Click "Deploy" → "New deployment" → Type: "Web app"
+//    Execute as: Me | Who has access: Anyone → Deploy
+// 4. Copy the Web App URL and paste it below:
+// ════════════════════════════════════════════════
+var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwrkoC1HEolnP2QTj9p-ww3E6nfbB7PP1xefq4uNoXTsnNgc_ZM0DEW07TB-Ev9LbBH/exec';
+
+function buildWhatsAppFallback(payload) {
+  var msg = '🍪 *NEW ORDER — Sunset Cookies*\n\n'
+    + '👤 ' + payload.name + '\n'
+    + '📞 ' + payload.phone + '\n'
+    + '📍 ' + payload.delivery_zone + ' — ' + payload.location + '\n\n'
+    + '🛒 *' + payload.product + '*\n'
+    + '📦 ' + payload.format + '\n'
+    + (payload.mix ? '🔀 Mix: ' + payload.mix + '\n' : '')
+    + '\n💰 Subtotal: ' + payload.subtotal
+    + '\n🚚 Delivery: ' + payload.delivery_fee
+    + '\n✅ Est. total: ' + payload.est_total
+    + (payload.note ? '\n\n📝 Note: ' + payload.note : '')
+    + '\n\n🕐 ' + payload.timestamp;
+  return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+}
+
+function submitOrder() {
+  var btn = document.getElementById('submit-btn');
+  btn.textContent = t('lbl.sending'); btn.disabled = true;
+  var totalCookies = format === 'box' ? qty * 6 : (products.length > 1 ? mixTotal() : qty);
+  var sub = calcEst();
+  var deliv = calcDelivery();
+  orderRef = '#' + Math.floor(1000 + Math.random() * 9000);
+  var payload = {
+    timestamp:     new Date().toLocaleString(),
+    ref:           orderRef,
+    name:          document.getElementById('f-name').value.trim(),
+    phone:         document.getElementById('f-phone').value.trim(),
+    location:      document.getElementById('f-loc').value.trim(),
+    delivery_zone: deliveryZone,
+    delivery_fee:  (deliveryFee === 0 && deliveryZone) ? t('lbl.confirmedOnCall') : fmtDA(deliv),
+    product:       products.map(pLabel).join(' + '),
+    format:        format === 'box' ? qty + ' box(es) of 6' : totalCookies + ' single cookies',
+    mix:           products.length > 1 ? products.map(function(p){ return (typeAlloc[p]||0) + 'x ' + LABELS[p]; }).join(', ') : '',
+    subtotal:      fmtDA(sub),
+    est_total:     fmtDA(sub + deliv),
+    note:          document.getElementById('f-note').value.trim()
+  };
+
+  function showConfirm() {
+    // Populate confirmation screen with ref
+    var refEl = document.getElementById('conf-ref');
+    if (refEl) refEl.textContent = orderRef;
+
+    // Wire the WhatsApp confirmation link with prefilled order summary
+    var waConfLink = document.getElementById('conf-wa-link');
+    if (waConfLink) {
+      var waMsg = '🍪 ' + payload.name + ' — ' + orderRef + '\n'
+        + payload.product + ' · ' + payload.format + '\n'
+        + payload.est_total + ' (est.)';
+      waConfLink.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMsg);
+    }
+
+    var steps = document.querySelectorAll('.fstep');
+    for (var i = 0; i < steps.length; i++) steps[i].classList.remove('act');
+    document.getElementById('s-conf').classList.add('act');
+    document.getElementById('dotsbar').style.display = 'none';
+    try { scrollToEl(document.getElementById('order')); } catch(e) {}
+  }
+
+  // No Sheet URL configured — still show confirm (dev/demo mode)
+  if (SHEET_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+    showConfirm();
+    return;
+  }
+
+  fetch(SHEET_URL, { method:'POST', body:JSON.stringify(payload), mode:'no-cors' })
+    .then(function() { showConfirm(); })
+    .catch(function() {
+      // Sheet failed — show custom modal so user can forward via WhatsApp
+      btn.textContent = t('s4.submit'); btn.disabled = false;
+      var waUrl = buildWhatsAppFallback(payload);
+      document.getElementById('sc-modal-title').textContent = '😬 ' + t('lbl.couldNotSend').split('.')[0];
+      document.getElementById('sc-modal-msg').textContent = t('lbl.couldNotSend');
+      document.getElementById('sc-modal-wa-btn').href = waUrl;
+      document.getElementById('sc-fallback-modal').classList.add('open');
+    });
+}
+
+// Fallback modal close handlers
+document.getElementById('sc-modal-close').addEventListener('click', function() {
+  document.getElementById('sc-fallback-modal').classList.remove('open');
+});
+document.getElementById('sc-fallback-modal').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('open');
+});
+
+// ── NEW ORDER RESET ──
+function resetOrder() {
+  // Reset all state
+  products = [];
+  customBase = 'normal';
+  customNuts = [];
+  customTops = ['Crème Bueno'];
+  hasSuggestion = false;
+  suggestionText = '';
+  specialMix = [];
+  format = 'single';
+  qty = 1;
+  typeAlloc = {};
+  deliveryFee = null;
+  deliveryZone = '';
+
+  // Reset form inputs
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-loc').value = '';
+  document.getElementById('f-note').value = '';
+  document.getElementById('f-zone').value = '';
+  var inputs = document.querySelectorAll('.fg input, .fg select');
+  for (var i = 0; i < inputs.length; i++) inputs[i].classList.remove('err');
+
+  // Reset product selection cards
+  var cards = document.querySelectorAll('.sc');
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('sel');
+
+  // Reset chips
+  var chips = document.querySelectorAll('.chip');
+  for (var i = 0; i < chips.length; i++) chips[i].classList.remove('sel');
+
+  // Re-select default chips
+  var baseChips = document.querySelectorAll('#fcust .chip[data-g="base"]');
+  if (baseChips[0]) baseChips[0].classList.add('sel');
+  var topChips = document.querySelectorAll('#fcust .chip[data-g="top"]');
+  if (topChips[0]) topChips[0].classList.add('sel'); // Crème Bueno
+
+  // Close customizer panels
+  document.getElementById('fcust').classList.remove('open');
+  document.getElementById('fspecial').classList.remove('open');
+  document.querySelector('#fcust .custnut-wrap') && document.querySelector('#fcust .custnut-wrap').classList.remove('show');
+  var suggWrap = document.querySelector('.sugg-wrap');
+  if (suggWrap) suggWrap.classList.remove('open');
+
+  // Reset format + estimate
+  setFormat('single');
+
+  // Show dots bar again
+  document.getElementById('dotsbar').style.display = 'flex';
+
+  // Reset submit button
+  var btn = document.getElementById('submit-btn');
+  if (btn) { btn.disabled = false; btn.textContent = t('s4.submit'); }
+
+  // Go to step 1 and scroll to top
+  goStep(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('new-order-btn').addEventListener('click', resetOrder);
+
+function scrollToEl(el) {
+  var top = el.getBoundingClientRect().top + window.pageYOffset - 65;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+}
+
+// ── ACCESSIBILITY: keyboard support for non-<button> clickable cards ──
+var kbClickable = document.querySelectorAll('.sc[role="button"], .fmt-card[role="button"]');
+for (var i = 0; i < kbClickable.length; i++) {
+  (function(el) {
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  })(kbClickable[i]);
+}
+
+// ── CONTACT LINKS (single source of truth) ──
+var WA_NUMBER  = '213555092508';
+var IG_HANDLE  = 'sun_setcookies';
+var waLinks = document.querySelectorAll('.wa-link');
+for (var i = 0; i < waLinks.length; i++) waLinks[i].href = 'https://wa.me/' + WA_NUMBER;
+var igLinks = document.querySelectorAll('.ig-link');
+for (var i = 0; i < igLinks.length; i++) igLinks[i].href = 'https://instagram.com/' + IG_HANDLE;
+
+// ── RESTORE LANGUAGE ──
+(function(){
+  var saved = 'en';
+  try { saved = localStorage.getItem('sc_lang') || 'en'; } catch(e){}
+  if (saved !== 'en') applyLang(saved);
+})();
+</script>
+</body>
+</html>
